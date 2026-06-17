@@ -3,7 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>넷피킹 | 인터넷 상품 견적</title>
+<title>인터넷달인 | 인터넷 상품 견적</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
 <style>
   :root {
     --bg: #0B1320;
@@ -22,6 +25,7 @@
     --serif: 'Source Serif 4', 'Noto Serif KR', Georgia, serif;
     --sans: -apple-system, 'Pretendard', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
     --mono: 'JetBrains Mono', 'Roboto Mono', monospace;
+    --brand-font: 'Jua', var(--sans);
   }
 
   * { box-sizing: border-box; }
@@ -67,9 +71,8 @@
   }
   .brand {
     display: flex; align-items: center; gap: 10px;
-    font-family: var(--serif); font-size: 20px; font-weight: 600; letter-spacing: -0.01em;
-    background: none; border: none; cursor: pointer; color: var(--ink); padding: 4px;
-    font-family: var(--serif);
+    font-family: var(--brand-font); font-size: 22px; font-weight: 400; letter-spacing: 0;
+    background: none; border: none; cursor: pointer; color: var(--signal-strong); padding: 4px;
   }
   .brand .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--signal); box-shadow: 0 0 0 4px var(--signal-soft); flex-shrink: 0; }
   .brand .sub { font-family: var(--mono); font-size: 10px; color: var(--ink-faint); letter-spacing: 0.06em; margin-top: 2px; text-align: left; }
@@ -384,7 +387,7 @@
   <header>
     <button class="brand" id="brandBtn" title="">
       <span class="dot"></span>
-      <div>넷피킹<div class="sub">NETPICKING</div></div>
+      <div>인터넷달인<div class="sub">INTERNET DALIN</div></div>
     </button>
     <div class="signal-bars"><span></span><span></span><span></span><span></span></div>
   </header>
@@ -417,7 +420,7 @@
     <div id="flowContent"></div>
   </div>
 
-  <footer>NETPICKING © 2026 · 본 화면은 데모이며 실제 통신사 가입과 무관합니다</footer>
+  <footer>인터넷달인 © 2026 · 본 화면은 데모이며 실제 통신사 가입과 무관합니다</footer>
 
 </div>
 
@@ -553,15 +556,47 @@
       phoneGeneral: 1100,
       phoneInternet: 2200,
       comboDiscount: 3300 + idx * 500,
-      commonGifts: [
-        '상품권 5만원 (제휴몰 사용 가능)',
-        '설치비 전액 면제'
-      ]
+      commonGifts: []
     };
   });
 
   // mutable state copy (admin edits this)
   let PRICING = JSON.parse(JSON.stringify(DEFAULT_PRICING));
+
+  // ---- KT 확정 기본값 (관리자가 직접 확정한 실제 운영 값으로 고정) ----
+  DEFAULT_PRICING['carrier-kt'] = {
+    internetOnly: {
+      100:  { price: 22000, mobileComboPrice: 16500, gift: 100000 },
+      500:  { price: 33000, mobileComboPrice: 22000, gift: 100000 },
+      1000: { price: 38500, mobileComboPrice: 27500, gift: 100000 }
+    },
+    internetTv: {
+      100: {
+        basic:  { price: 37400, mobileComboPrice: 31900, gift: 200000 },
+        lite:   { price: 38500, mobileComboPrice: 33000, giftExtra: 0 },
+        essence:{ price: 41800, mobileComboPrice: 36300, giftExtra: 0 },
+        allgtv: { price: 42900, mobileComboPrice: 37400, giftExtra: 0 }
+      },
+      500: {
+        basic:  { price: 37400 + 5500, mobileComboPrice: 31900 + 5500, gift: 200000 },
+        lite:   { price: 38500 + 5500, mobileComboPrice: 33000 + 5500, giftExtra: 0 },
+        essence:{ price: 41800 + 5500, mobileComboPrice: 36300 + 5500, giftExtra: 0 },
+        allgtv: { price: 42900 + 5500, mobileComboPrice: 37400 + 5500, giftExtra: 0 }
+      },
+      1000: {
+        basic:  { price: 37400 + 11000, mobileComboPrice: 31900 + 11000, gift: 200000 },
+        lite:   { price: 38500 + 11000, mobileComboPrice: 33000 + 11000, giftExtra: 0 },
+        essence:{ price: 41800 + 11000, mobileComboPrice: 36300 + 11000, giftExtra: 0 },
+        allgtv: { price: 42900 + 11000, mobileComboPrice: 37400 + 11000, giftExtra: 0 }
+      }
+    },
+    wifi: 1100,
+    phoneGeneral: 1100,
+    phoneInternet: 2200,
+    comboDiscount: 3300,
+    commonGifts: []
+  };
+  PRICING['carrier-kt'] = JSON.parse(JSON.stringify(DEFAULT_PRICING['carrier-kt']));
 
   const TREE = {
     id: 'root', title: '상품 유형 선택', eyebrow: 'STEP 1', desc: '설치할 공간의 유형을 먼저 선택해주세요.',
@@ -719,7 +754,6 @@
           <div class="summary-mobile-combo"><span class="label">모바일 결합 시</span><span class="amount">₩${won(price.mobileComboPrice)}<span class="unit">/월</span></span></div>
         </div>
         <div class="combo-box">
-          <div class="combo-row"><span>결합 시 예상 요금</span><span class="amount">₩${won(price.comboTotal)} /월</span></div>
           <div class="combo-note">ⓘ 결합요금은 개통 후 본사를 통해 결합 신청 시 적용돼요. 결합 가능 여부는 상담을 통해 다시 확인해드려요.</div>
         </div>
       </div>
@@ -1002,7 +1036,7 @@
           ${p.commonGifts.map(g => `<div class="gift-item"><span class="gi-mark">✓</span><span>${g}</span></div>`).join('')}
         </div>
         <div class="final-amount">₩${won(price.total)} <span style="font-size:14px;color:var(--ink-dim);font-family:var(--sans);font-weight:400;">/월</span></div>
-        <div class="final-note">결합 시 예상 요금은 ₩${won(price.comboTotal)}/월이며, 개통 후 본사를 통해 결합 신청 시 적용돼요.<br>여기까지가 견적 확인 단계예요. 다음 단계는 이어서 안내드릴게요.</div>
+        <div class="final-note">ⓘ 결합요금은 개통 후 본사를 통해 결합 신청 시 적용돼요.<br>여기까지가 견적 확인 단계예요. 다음 단계는 이어서 안내드릴게요.</div>
       </div>
     `;
   }
