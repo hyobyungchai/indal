@@ -4,28 +4,31 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>인터넷달인 | 인터넷 상품 견적</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Ccircle cx='20' cy='20' r='19' fill='%23F7F9FC' stroke='%230FA89A' stroke-width='1.6'/%3E%3Crect x='11' y='22' width='4.5' height='8' rx='1.4' fill='%230FA89A' opacity='0.55'/%3E%3Crect x='17.75' y='17' width='4.5' height='13' rx='1.4' fill='%230FA89A' opacity='0.8'/%3E%3Crect x='24.5' y='11' width='4.5' height='19' rx='1.4' fill='%230FA89A'/%3E%3Ccircle cx='26.75' cy='8' r='2.2' fill='%23E08A3C'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #0B1320;
-    --bg-soft: #101A2C;
-    --panel: #141F35;
-    --panel-border: #233152;
-    --ink: #EAF0FB;
-    --ink-dim: #8C9BBE;
-    --ink-faint: #5C6C90;
-    --signal: #2DD4BF;
-    --signal-soft: rgba(45, 212, 191, 0.14);
-    --signal-strong: #5EEAD4;
-    --gold: #F4A261;
-    --line: #1E2A45;
+    --bg: #F7F9FC;
+    --bg-soft: #F1F4F9;
+    --panel: #FFFFFF;
+    --panel-border: #DDE5F0;
+    --ink: #16213A;
+    --ink-dim: #5B6B8C;
+    --ink-faint: #8B98B3;
+    --signal: #0FA89A;
+    --signal-soft: rgba(15, 168, 154, 0.10);
+    --signal-strong: #0C8C80;
+    --gold: #E08A3C;
+    --line: #E6EBF3;
     --radius: 14px;
     --serif: 'Source Serif 4', 'Noto Serif KR', Georgia, serif;
     --sans: -apple-system, 'Pretendard', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
     --mono: 'JetBrains Mono', 'Roboto Mono', monospace;
     --brand-font: 'Jua', var(--sans);
+    --shadow-sm: 0 1px 3px rgba(22,33,58,0.06), 0 1px 2px rgba(22,33,58,0.04);
+    --shadow-md: 0 4px 14px rgba(22,33,58,0.08), 0 2px 4px rgba(22,33,58,0.05);
   }
 
   * { box-sizing: border-box; }
@@ -46,8 +49,8 @@
     position: fixed;
     inset: 0;
     background-image:
-      radial-gradient(circle at 15% 0%, rgba(45,212,191,0.09), transparent 45%),
-      radial-gradient(circle at 90% 15%, rgba(244,162,97,0.05), transparent 40%);
+      radial-gradient(circle at 15% 0%, rgba(15,168,154,0.06), transparent 45%),
+      radial-gradient(circle at 90% 15%, rgba(224,138,60,0.05), transparent 40%);
     pointer-events: none;
     z-index: 0;
   }
@@ -57,7 +60,7 @@
     z-index: 1;
     max-width: 720px;
     margin: 0 auto;
-    padding: 0 20px 80px;
+    padding: 0 20px 140px;
   }
 
   /* ---------- Header ---------- */
@@ -74,7 +77,8 @@
     font-family: var(--brand-font); font-size: 22px; font-weight: 400; letter-spacing: 0;
     background: none; border: none; cursor: pointer; color: var(--signal-strong); padding: 4px;
   }
-  .brand .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--signal); box-shadow: 0 0 0 4px var(--signal-soft); flex-shrink: 0; }
+  .brand-mark { flex-shrink: 0; transition: transform 0.2s ease; }
+  .brand:hover .brand-mark { transform: rotate(-6deg) scale(1.04); }
   .brand .sub { font-family: var(--mono); font-size: 10px; color: var(--ink-faint); letter-spacing: 0.06em; margin-top: 2px; text-align: left; }
   .signal-bars { display: flex; align-items: flex-end; gap: 3px; height: 16px; }
   .signal-bars span { width: 4px; background: var(--signal); border-radius: 1px; opacity: 0.35; animation: pulse 1.8s ease-in-out infinite; }
@@ -86,54 +90,56 @@
   @media (prefers-reduced-motion: reduce) { .signal-bars span { animation: none; opacity: 0.8; } }
 
   /* ================= LANDING ================= */
-  .landing-hero { padding: 56px 0 36px; text-align: center; }
+  .landing-hero {
+    padding: 44px 28px; text-align: center;
+    background: var(--panel); border: 1px solid var(--panel-border); border-radius: 18px;
+    box-shadow: var(--shadow-sm);
+  }
+  .stage-card {
+    background: var(--panel); border: 1px solid var(--panel-border); border-radius: 16px;
+    padding: 24px; box-shadow: var(--shadow-sm);
+  }
+  .stage-card .step-title-block { margin-top: 0; }
+  @media (max-width: 480px) { .stage-card { padding: 18px 16px; } }
   .promo-badge {
-    display: inline-flex; align-items: center; gap: 8px;
-    background: linear-gradient(180deg, rgba(244,162,97,0.16), rgba(244,162,97,0.04));
-    border: 1px solid rgba(244,162,97,0.35); color: var(--gold);
-    font-family: var(--mono); font-size: 12px; letter-spacing: 0.04em;
-    padding: 8px 16px; border-radius: 999px; margin-bottom: 22px;
+    display: inline-flex; align-items: center;
+    background: var(--signal-soft); color: var(--signal-strong);
+    font-family: var(--sans); font-size: 12.5px; font-weight: 600; letter-spacing: 0.01em;
+    padding: 7px 14px; border-radius: 999px; margin-bottom: 20px;
   }
   .landing-hero h1 {
-    font-family: var(--serif); font-size: 36px; font-weight: 600; line-height: 1.32;
-    letter-spacing: -0.01em; margin: 0 0 16px;
+    font-family: var(--serif); font-size: 32px; font-weight: 600; line-height: 1.3;
+    letter-spacing: -0.01em; margin: 0 0 12px; white-space: nowrap;
   }
   .landing-hero h1 em { font-style: normal; color: var(--signal-strong); }
-  .landing-hero p { color: var(--ink-dim); font-size: 15px; max-width: 440px; margin: 0 auto; }
-  .cta-area { margin: 32px 0 8px; }
+  .landing-hero p { color: var(--ink-dim); font-size: 14.5px; max-width: 420px; margin: 0 auto; line-height: 1.6; }
+  .cta-area { margin: 28px 0 4px; }
   .btn-quote {
     display: inline-flex; align-items: center; gap: 10px;
     background: var(--signal); color: #062622; font-family: var(--sans);
-    font-size: 16px; font-weight: 700; padding: 17px 30px; border-radius: 12px;
-    border: none; cursor: pointer; transition: transform 0.15s ease, background 0.2s ease;
+    font-size: 15.5px; font-weight: 700; padding: 16px 32px; border-radius: 11px;
+    border: none; cursor: pointer; transition: transform 0.15s ease, background 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: var(--shadow-sm);
   }
-  .btn-quote:hover { background: var(--signal-strong); transform: translateY(-1px); }
-  .btn-quote .arrow { font-size: 18px; transition: transform 0.15s ease; }
-  .btn-quote:hover .arrow { transform: translateX(3px); }
-  .cta-sub { margin-top: 12px; font-size: 12px; color: var(--ink-faint); font-family: var(--mono); }
+  .btn-quote:hover { background: var(--signal-strong); transform: translateY(-1px); box-shadow: var(--shadow-md); }
 
-  .placeholder-section {
-    border: 1px dashed var(--panel-border); border-radius: var(--radius); padding: 28px;
-    margin-top: 18px; text-align: center; color: var(--ink-faint); font-size: 13px;
+  .header-right { display: flex; align-items: center; gap: 14px; }
+  .header-tel {
+    display: flex; align-items: center; gap: 7px; font-family: var(--sans); font-size: 16px;
+    font-weight: 700; color: var(--signal-strong); text-decoration: none; white-space: nowrap;
+    background: var(--signal-soft); border: 1px solid rgba(15,168,154,0.25); border-radius: 999px;
+    padding: 9px 18px; transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+    letter-spacing: -0.01em;
   }
-  .placeholder-section .ph-label {
-    font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; color: var(--ink-faint);
-    margin-bottom: 6px; text-transform: uppercase;
+  .header-tel svg { flex-shrink: 0; }
+  .header-tel:hover { background: var(--signal); color: #062622; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(15,168,154,0.25); }
+  @media (max-width: 480px) {
+    .header-tel { font-size: 13px; padding: 7px 13px; gap: 5px; }
+    .header-tel svg { width: 15px; height: 15px; }
   }
+  @media (max-width: 380px) { .header-tel { font-size: 12px; padding: 6px 11px; } }
 
-  /* ================= FLOW (category / carrier / config) ================= */
-  .flow-header { padding: 24px 0 4px; }
-  .back-row { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; }
-  .btn-back {
-    display: inline-flex; align-items: center; gap: 6px; background: var(--bg-soft);
-    border: 1px solid var(--panel-border); color: var(--ink-dim); font-family: var(--sans);
-    font-size: 13px; padding: 9px 14px; border-radius: 9px; cursor: pointer; transition: all 0.2s ease;
-  }
-  .btn-back:hover { border-color: var(--signal); color: var(--signal-strong); }
-  .breadcrumb { font-family: var(--mono); font-size: 11.5px; color: var(--ink-faint); letter-spacing: 0.02em; }
-  .breadcrumb .seg.active { color: var(--signal-strong); }
-
-  .step-title-block { margin-bottom: 28px; }
+  .step-title-block { margin: 26px 0 24px; }
   .step-eyebrow {
     font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; color: var(--signal);
     text-transform: uppercase; margin-bottom: 10px; display: flex; align-items: center; gap: 8px;
@@ -142,69 +148,128 @@
   .step-title-block h2 { font-family: var(--serif); font-size: 25px; font-weight: 600; margin: 0 0 8px; letter-spacing: -0.01em; }
   .step-title-block p { color: var(--ink-dim); font-size: 13.5px; margin: 0; }
 
+  /* 통신사명을 주인공으로 강조하는 타이틀 블록 (상품유형/옵션선택 화면) */
+  .step-title-block.carrier-emphasis .step-eyebrow {
+    font-family: var(--serif); font-size: 26px; font-weight: 700; color: var(--ink);
+    text-transform: none; letter-spacing: -0.01em; margin-bottom: 4px;
+  }
+  .step-title-block.carrier-emphasis .step-eyebrow::before { display: none; }
+  .step-title-block.carrier-emphasis h2 { font-size: 14.5px; font-weight: 500; color: var(--ink-dim); margin: 0; }
+
   /* generic option grid (2 columns, vertical card) */
+  /* ===== card-style selectors (carrier list, product type) ===== */
   .option-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 12px; }
   @media (max-width: 480px) { .option-grid { grid-template-columns: 1fr; } }
-
+  .area-check-btn {
+    display: flex; align-items: center; justify-content: center; gap: 6px; width: 100%;
+    background: var(--bg-soft); border: 1px solid var(--panel-border); border-radius: 10px;
+    padding: 11px 14px; font-size: 12.5px; font-weight: 600; color: var(--ink-dim);
+    cursor: pointer; margin-bottom: 16px; transition: border-color 0.2s ease, color 0.2s ease;
+  }
+  .area-check-btn:hover { border-color: var(--signal); color: var(--signal-strong); }
   .option-card {
     background: var(--panel); border: 1px solid var(--panel-border); border-radius: 14px;
     padding: 26px 18px; display: flex; flex-direction: column; align-items: center; text-align: center;
-    gap: 14px; cursor: pointer; transition: border-color 0.2s ease, background 0.2s ease, transform 0.12s ease;
+    gap: 14px; cursor: pointer; transition: border-color 0.2s ease, background 0.2s ease, transform 0.12s ease, box-shadow 0.2s ease;
+    box-shadow: var(--shadow-sm);
   }
-  .option-card:hover { border-color: var(--signal); background: linear-gradient(180deg, var(--signal-soft), var(--panel)); transform: translateY(-2px); }
-  .option-card.selected { border-color: var(--signal); background: linear-gradient(180deg, var(--signal-soft), var(--panel)); }
-
+  .option-card:hover { border-color: var(--signal); background: linear-gradient(180deg, var(--signal-soft), var(--panel)); transform: translateY(-2px); box-shadow: var(--shadow-md); }
+  .option-icon-row { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
   .option-icon {
-    width: 52px; height: 52px; border-radius: 13px; background: var(--bg-soft);
+    width: 48px; height: 48px; border-radius: 12px; background: var(--bg-soft);
     border: 1px solid var(--panel-border); display: flex; align-items: center; justify-content: center;
-    font-size: 23px; flex-shrink: 0;
+    font-size: 21px; flex-shrink: 0;
   }
-  .option-card:hover .option-icon, .option-card.selected .option-icon { border-color: var(--signal); }
+  .option-card:hover .option-icon { border-color: var(--signal); }
   .option-body { width: 100%; }
   .option-body .o-title { font-size: 15.5px; font-weight: 600; margin-bottom: 5px; line-height: 1.3; }
   .option-body .o-desc { font-size: 12px; color: var(--ink-faint); line-height: 1.5; }
 
-  /* carrier grid (3 cols, 6 carriers) */
   .carrier-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 12px; }
   @media (max-width: 560px) { .carrier-grid { grid-template-columns: repeat(2, 1fr); } }
   .carrier-card {
-    background: var(--panel); border: 1px solid var(--panel-border); border-radius: 13px;
-    padding: 18px 12px; display: flex; flex-direction: column; align-items: center; text-align: center;
-    gap: 10px; cursor: pointer; transition: border-color 0.2s ease, background 0.2s ease, transform 0.12s ease;
+    background: var(--panel); border: 1px solid var(--panel-border); border-radius: 12px;
+    padding: 17px 10px; display: flex; flex-direction: column; align-items: center; text-align: center;
+    cursor: pointer; transition: border-color 0.2s ease, background 0.2s ease, transform 0.12s ease, box-shadow 0.2s ease;
+    box-shadow: var(--shadow-sm);
   }
-  .carrier-card:hover { border-color: var(--signal); background: linear-gradient(180deg, var(--signal-soft), var(--panel)); transform: translateY(-2px); }
-  .carrier-logo {
-    width: 100%; height: 40px; border-radius: 9px; background: var(--bg-soft); border: 1px solid var(--panel-border);
-    display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 12px;
-    font-weight: 700; letter-spacing: 0.03em; color: var(--ink-dim);
+  .carrier-card:hover { border-color: var(--signal); background: linear-gradient(180deg, var(--signal-soft), var(--panel)); transform: translateY(-2px); box-shadow: var(--shadow-md); }
+  .carrier-name { font-size: 14px; font-weight: 600; line-height: 1.3; }
+  .carrier-area-note { font-size: 10px; color: #E0392B; margin-top: 3px; }
+  .carrier-area-check-btn {
+    margin-top: 6px; background: var(--bg-soft); border: 1px solid var(--panel-border); border-radius: 999px;
+    padding: 4px 10px; font-size: 10px; font-weight: 600; color: var(--ink-dim); cursor: pointer;
+    transition: border-color 0.2s ease, color 0.2s ease;
   }
-  .carrier-card:hover .carrier-logo { border-color: var(--signal); color: var(--signal-strong); }
-  .carrier-name { font-size: 13.5px; font-weight: 600; line-height: 1.3; }
-  .carrier-desc { font-size: 11px; color: var(--ink-faint); line-height: 1.4; }
+  .carrier-area-check-btn:hover { border-color: var(--signal); color: var(--signal-strong); }
 
-  /* choice pill row (speed / wifi / phone) */
-  .config-group { margin-bottom: 18px; }
-  .config-group-label {
-    font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.06em; color: var(--ink-dim);
-    margin-bottom: 10px; text-transform: uppercase;
+  /* ===== dropdown / accordion selector ===== */
+  .dd-group { margin-bottom: 12px; }
+  .dd-header {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    background: var(--panel); border: 1px solid var(--panel-border); border-radius: 13px;
+    padding: 16px 18px; cursor: pointer; transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: var(--shadow-sm);
   }
-  .pill-row-note { font-size: 12.5px; color: var(--ink-faint); padding: 14px 0; }
-  .pill-row { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 12px; }
-  .pill-card {
-    flex: 1; min-width: 130px; background: var(--panel); border: 1px solid var(--panel-border);
-    border-radius: 13px; padding: 18px 14px; cursor: pointer; text-align: center;
-    transition: border-color 0.2s ease, background 0.2s ease, transform 0.12s ease;
+  .dd-header:hover { border-color: var(--signal); }
+  .dd-group.open .dd-header { border-color: var(--signal); background: linear-gradient(180deg, var(--signal-soft), var(--panel)); border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
+  .dd-group.filled .dd-header { border-color: rgba(15,168,154,0.4); }
+  .dd-group.disabled .dd-header { cursor: not-allowed; opacity: 0.45; }
+
+  .dd-header-left { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+  .dd-step-num {
+    font-family: var(--mono); font-size: 10.5px; color: var(--ink-faint); letter-spacing: 0.05em;
   }
-  .pill-card:hover { border-color: var(--signal); transform: translateY(-2px); }
-  .pill-card.selected { border-color: var(--signal); background: linear-gradient(180deg, var(--signal-soft), var(--panel)); }
-  .pill-card .p-title { font-size: 14.5px; font-weight: 700; margin-bottom: 4px; }
-  .pill-card .p-price { font-family: var(--mono); font-size: 12px; color: var(--signal-strong); }
-  .pill-card.selected .p-price { color: var(--signal-strong); }
+  .dd-step-num .num-badge {
+    display: inline-flex; align-items: center; justify-content: center; width: 16px; height: 16px;
+    border-radius: 50%; background: var(--bg-soft); border: 1px solid var(--panel-border); color: var(--ink-dim);
+    font-size: 9.5px; margin-right: 5px; vertical-align: middle;
+  }
+  .dd-group.filled .dd-step-num .num-badge { background: var(--signal); border-color: var(--signal); color: #062622; }
+
+  .dd-title-row { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+  .dd-label { font-size: 15px; font-weight: 600; color: var(--ink); }
+  .dd-value { font-size: 13px; color: var(--signal-strong); font-weight: 600; }
+  .dd-placeholder { font-size: 13px; color: var(--ink-faint); }
+  .dd-subvalue { font-family: var(--mono); font-size: 11.5px; color: var(--ink-faint); }
+
+  .dd-chevron {
+    flex-shrink: 0; width: 26px; height: 26px; border-radius: 50%; background: var(--bg-soft);
+    border: 1px solid var(--panel-border); display: flex; align-items: center; justify-content: center;
+    color: var(--ink-dim); font-size: 12px; transition: transform 0.25s ease, border-color 0.2s ease;
+  }
+  .dd-group.open .dd-chevron { transform: rotate(180deg); border-color: var(--signal); color: var(--signal-strong); }
+
+  .dd-panel {
+    max-height: 0; overflow: hidden; transition: max-height 0.3s ease;
+    border: 1px solid var(--signal); border-top: none; border-bottom-left-radius: 13px; border-bottom-right-radius: 13px;
+    background: var(--bg-soft);
+  }
+  .dd-group.open .dd-panel { max-height: 2000px; }
+  .dd-panel-inner { padding: 14px; display: flex; flex-direction: column; gap: 8px; }
+
+  .dd-option {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    background: var(--panel); border: 1px solid var(--panel-border); border-radius: 10px;
+    padding: 13px 16px; cursor: pointer; transition: border-color 0.2s ease, background 0.2s ease;
+  }
+  .dd-option:hover { border-color: var(--signal); }
+  .dd-option.selected { border-color: var(--signal); background: linear-gradient(180deg, var(--signal-soft), var(--panel)); }
+  .dd-option-icon { font-size: 18px; flex-shrink: 0; }
+  .dd-option-text { display: flex; flex-direction: column; gap: 2px; flex: 1; min-width: 0; }
+  .dd-option-title { font-size: 14px; font-weight: 600; color: var(--ink); }
+  .dd-option-desc { font-size: 11.5px; color: var(--ink-faint); }
+  .dd-option-price { font-family: var(--sans); font-size: 14.5px; font-weight: 700; color: var(--signal-strong); flex-shrink: 0; white-space: nowrap; }
+  .dd-option.selected .dd-option-price { color: var(--signal-strong); }
+  .dd-option-check { width: 18px; height: 18px; border-radius: 50%; border: 1px solid var(--panel-border); flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 11px; color: transparent; }
+  .dd-option.selected .dd-option-check { background: var(--signal); border-color: var(--signal); color: #062622; }
+
+  .dd-panel-note { font-size: 12px; color: var(--ink-faint); text-align: center; padding: 10px 0; }
 
   /* summary panel (live price) */
   .summary-panel {
     background: var(--panel); border: 1px solid var(--panel-border); border-radius: 14px;
-    padding: 22px; margin-top: 24px;
+    padding: 22px; margin-top: 24px; box-shadow: var(--shadow-sm);
   }
   .summary-panel.summary-empty { text-align: center; padding: 30px 22px; }
   .summary-empty-note { font-size: 12.5px; color: var(--ink-faint); }
@@ -232,13 +297,17 @@
   @media (max-width: 420px) {
     .summary-mobile-combo { border-left: none; border-top: 1px solid var(--line); padding-left: 0; padding-top: 12px; align-items: flex-start; text-align: left; width: 100%; }
   }
+  .contract-note {
+    margin-top: 10px; font-size: 11.5px; color: var(--ink-faint); text-align: center;
+  }
+  .gift-summary-card .contract-note { text-align: left; margin-top: 6px; margin-bottom: 4px; }
 
   .combo-box {
-    margin-top: 14px; background: rgba(244,162,97,0.07); border: 1px solid rgba(244,162,97,0.25);
+    margin-top: 14px; background: rgba(224,138,60,0.07); border: 1px solid rgba(224,138,60,0.25);
     border-radius: 10px; padding: 14px 16px;
   }
   .combo-box .combo-row { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 6px; }
-  .combo-box .combo-row .amount { font-family: var(--mono); color: var(--gold); font-weight: 700; }
+  .combo-box .combo-row .amount { font-family: var(--sans); color: var(--gold); font-weight: 700; }
   .combo-box .combo-note { font-size: 11.5px; color: #D9B48A; line-height: 1.6; }
 
   .btn-next-fixed { margin-top: 22px; }
@@ -266,7 +335,101 @@
   }
   .gift-item .gi-mark { color: var(--signal-strong); font-weight: 700; }
   .gift-panel .final-amount { font-family: var(--serif); font-size: 28px; font-weight: 700; color: var(--signal-strong); margin: 18px 0 6px; }
+  .gift-panel .final-combo { font-size: 13.5px; color: var(--gold); margin-bottom: 14px; }
+  .gift-panel .final-combo strong { font-family: var(--sans); font-weight: 700; }
   .gift-panel .final-note { font-size: 11.5px; color: var(--ink-faint); border-top: 1px solid var(--line); padding-top: 16px; margin-top: 6px; }
+
+  /* compact gift+price summary card (shown after clicking 신청 진행하기) */
+  .gift-summary-card {
+    background: var(--panel); border: 1px solid var(--signal); border-radius: 12px; padding: 14px 16px; box-shadow: var(--shadow-md);
+  }
+  .gs-row { display: flex; justify-content: space-between; align-items: baseline; padding: 4px 0; font-size: 12.5px; }
+  .gs-row-wrap { align-items: flex-start; }
+  .gs-k { color: var(--ink-faint); flex-shrink: 0; }
+  .gs-v { color: var(--ink); font-weight: 600; text-align: right; max-width: 62%; line-height: 1.5; }
+  .gs-tag-list { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 4px 0; }
+  .gs-tag { white-space: nowrap; }
+  .gs-tag:not(:last-child)::after { content: ' · '; color: var(--ink-faint); font-weight: 400; }
+  .gs-price { font-family: var(--sans); font-weight: 700; color: var(--ink); font-size: 14.5px; }
+  .gs-combo { font-family: var(--sans); font-weight: 700; color: var(--gold); font-size: 13px; }
+  .gs-unit { font-size: 10px; color: var(--ink-faint); font-weight: 400; margin-left: 2px; }
+  .gs-divider { height: 1px; background: var(--line); margin: 6px 0 8px; }
+  .gs-gift-block { text-align: center; padding: 6px 0 2px; }
+  .gs-gift-label { font-size: 11.5px; color: var(--ink-dim); margin-bottom: 4px; }
+  .gs-gift-amount {
+    font-family: var(--serif); font-size: 24px; font-weight: 700; color: var(--signal-strong);
+  }
+  .gs-gift-unit { font-size: 13px; font-weight: 500; margin-left: 3px; }
+  .gs-gift-extra { font-size: 10.5px; color: var(--ink-faint); margin-top: 5px; }
+  .gs-note { font-size: 10px; color: var(--ink-faint); text-align: center; border-top: 1px solid var(--line); padding-top: 8px; margin-top: 8px; }
+
+  .apply-title { font-family: var(--serif); font-size: 17px; font-weight: 600; margin-bottom: 14px; }
+
+  /* application form (under gift panel) */
+  .apply-panel {
+    background: var(--panel); border: 1px solid var(--panel-border); border-radius: 14px; padding: 22px; margin-top: 10px; box-shadow: var(--shadow-sm);
+  }
+  .field { margin-bottom: 18px; }
+  .field label { display: block; font-size: 13px; color: var(--ink-dim); margin-bottom: 8px; font-weight: 500; }
+  .field label .req { color: var(--signal); margin-left: 3px; }
+  .field input[type="text"], .field input[type="tel"] {
+    width: 100%; background: var(--bg-soft); border: 1px solid var(--panel-border); border-radius: 9px;
+    padding: 13px 14px; font-size: 14.5px; color: var(--ink); font-family: var(--sans); transition: border-color 0.2s ease;
+  }
+  .field input::placeholder { color: var(--ink-faint); }
+  .field input:focus { outline: none; border-color: var(--signal); box-shadow: 0 0 0 3px var(--signal-soft); }
+  .field input:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  .field-group-label { font-size: 13px; color: var(--ink-dim); margin: 0 0 8px; font-weight: 500; }
+  .optional-tag { font-size: 11px; color: var(--ink-faint); font-weight: 400; }
+  .addr-dd-row { display: flex; gap: 8px; margin-bottom: 18px; flex-wrap: wrap; }
+  .addr-dd-row .dd-select { flex: 1; min-width: 90px; }
+
+  .dd-select {
+    background: var(--bg-soft); border: 1px solid var(--panel-border); border-radius: 9px;
+    padding: 13px 12px; font-size: 14px; color: var(--ink); font-family: var(--sans);
+    appearance: none; -webkit-appearance: none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%235B6B8C' stroke-width='2'><path d='M6 9l6 6 6-6'/></svg>");
+    background-repeat: no-repeat; background-position: right 12px center; background-size: 16px;
+    cursor: pointer;
+  }
+  .dd-select:focus { outline: none; border-color: var(--signal); }
+  .dd-select:disabled { opacity: 0.45; cursor: not-allowed; }
+  .dd-select-full { width: 100%; margin-bottom: 18px; }
+
+  .apply-panel .field-error {
+    font-size: 12px; color: #F08A9B; margin: 4px 0 0; display: none;
+  }
+  .apply-panel .field-error.show { display: block; }
+
+  .privacy-consent {
+    display: flex; align-items: flex-start; gap: 8px; margin-top: 16px;
+    font-size: 12.5px; color: var(--ink-dim); cursor: pointer; line-height: 1.5;
+  }
+  .privacy-consent input[type="checkbox"] {
+    width: 17px; height: 17px; flex-shrink: 0; margin-top: 1px; accent-color: var(--signal);
+    cursor: pointer;
+  }
+  .privacy-link {
+    background: none; border: none; color: var(--signal-strong); font-size: 12.5px;
+    text-decoration: underline; cursor: pointer; padding: 0; font-family: var(--sans);
+  }
+  .privacy-modal { max-width: 420px; text-align: left; }
+  .privacy-modal h3 { text-align: center; }
+  .privacy-body { font-size: 12.5px; color: var(--ink-dim); line-height: 1.6; max-height: 280px; overflow-y: auto; margin: 14px 0; }
+  .privacy-body p { margin: 0 0 12px; }
+  .privacy-body strong { color: var(--ink); }
+
+  .area-modal { max-width: 560px; }
+  .area-modal .privacy-body { max-height: 420px; }
+  .area-table { width: 100%; border-collapse: collapse; font-size: 11.5px; margin-top: 10px; }
+  .area-table th {
+    text-align: left; font-size: 11px; color: var(--ink-faint); font-weight: 600;
+    padding: 6px 8px; border-bottom: 1px solid var(--line);
+  }
+  .area-table td { padding: 8px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  .area-table-region { font-weight: 700; color: var(--ink); white-space: nowrap; width: 78px; }
+  .area-table-list { color: var(--ink-dim); line-height: 1.6; }
 
   .gift-inline-panel {
     background: var(--panel); border: 1px solid var(--panel-border); border-radius: 14px;
@@ -284,7 +447,7 @@
   }
   .admin-modal {
     background: var(--panel); border: 1px solid var(--panel-border); border-radius: 16px;
-    padding: 30px; max-width: 360px; width: 100%; text-align: center;
+    padding: 30px; max-width: 360px; width: 100%; text-align: center; box-shadow: 0 12px 36px rgba(22,33,58,0.18);
   }
   .admin-modal h3 { font-family: var(--serif); font-size: 19px; margin: 0 0 8px; }
   .admin-modal p { font-size: 12.5px; color: var(--ink-faint); margin: 0 0 20px; }
@@ -308,7 +471,7 @@
   .admin-page { position: relative; z-index: 1; max-width: 880px; margin: 0 auto; padding: 24px 20px 80px; }
   .admin-topbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid var(--line); }
   .admin-topbar h2 { font-family: var(--serif); font-size: 22px; margin: 0; }
-  .admin-topbar .tag { font-family: var(--mono); font-size: 11px; color: var(--gold); background: rgba(244,162,97,0.12); padding: 4px 10px; border-radius: 6px; margin-left: 10px; }
+  .admin-topbar .tag { font-family: var(--mono); font-size: 11px; color: var(--gold); background: rgba(224,138,60,0.12); padding: 4px 10px; border-radius: 6px; margin-left: 10px; }
 
   .admin-carrier-tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
   .admin-tab {
@@ -317,7 +480,7 @@
   }
   .admin-tab.active { border-color: var(--signal); color: var(--signal-strong); background: var(--signal-soft); }
 
-  .admin-section { background: var(--panel); border: 1px solid var(--panel-border); border-radius: 14px; padding: 22px; margin-bottom: 16px; }
+  .admin-section { background: var(--panel); border: 1px solid var(--panel-border); border-radius: 14px; padding: 22px; margin-bottom: 16px; box-shadow: var(--shadow-sm); }
   .admin-section h4 { font-size: 14px; margin: 0 0 14px; color: var(--ink); font-weight: 600; }
   .admin-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
   .admin-field label { display: block; font-size: 11.5px; color: var(--ink-faint); margin-bottom: 6px; }
@@ -362,9 +525,9 @@
     display: flex; justify-content: flex-end; margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--line);
   }
   .btn-small.default-save {
-    background: rgba(244,162,97,0.1); border-color: rgba(244,162,97,0.4); color: var(--gold); font-weight: 600;
+    background: rgba(224,138,60,0.1); border-color: rgba(224,138,60,0.4); color: var(--gold); font-weight: 600;
   }
-  .btn-small.default-save:hover { background: rgba(244,162,97,0.18); border-color: var(--gold); color: var(--gold); }
+  .btn-small.default-save:hover { background: rgba(224,138,60,0.18); border-color: var(--gold); color: var(--gold); }
   .admin-save-note { font-size: 11.5px; color: var(--ink-faint); margin-top: 8px; }
   .btn-small { font-size: 13px; padding: 10px 18px; border-radius: 9px; border: 1px solid var(--panel-border); background: var(--bg-soft); color: var(--ink-dim); cursor: pointer; }
   .btn-small:hover { border-color: var(--signal); color: var(--signal-strong); }
@@ -372,11 +535,81 @@
   .btn-small.primary:hover { background: var(--signal-strong); }
 
   @media (max-width: 480px) {
-    .landing-hero h1 { font-size: 28px; }
-    .landing-hero { padding: 40px 0 28px; }
+    .landing-hero h1 { font-size: 23px; }
+    .landing-hero { padding: 32px 20px; }
     .step-title-block h2 { font-size: 21px; }
-    .option-card { padding: 16px; gap: 12px; }
+    .dd-header { padding: 14px 14px; }
     .admin-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 340px) {
+    .landing-hero h1 { font-size: 19px; }
+  }
+
+  /* ===== sticky bottom consult bar (collapsed by default, tap to expand) ===== */
+  .sticky-consult-bar {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 60;
+    background: var(--panel); border-top: 1px solid var(--panel-border);
+    box-shadow: 0 -4px 16px rgba(22,33,58,0.08);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  .scb-handle {
+    width: 100%; background: none; border: none; cursor: pointer;
+    display: flex; flex-direction: column; align-items: center; gap: 6px;
+    padding: 9px 14px 11px; font-family: var(--sans);
+  }
+  .scb-handle-bar { width: 36px; height: 4px; border-radius: 999px; background: var(--panel-border); }
+  .scb-handle-text { font-size: 13px; font-weight: 600; color: var(--ink-dim); }
+  .sticky-consult-bar.open .scb-handle-text { color: var(--signal-strong); }
+  .sticky-consult-bar.open .scb-handle-bar { background: var(--signal); }
+
+  .scb-inner {
+    max-width: 720px; margin: 0 auto; display: flex; gap: 8px; align-items: center;
+    max-height: 0; overflow: hidden; opacity: 0;
+    transition: max-height 0.28s ease, opacity 0.2s ease, padding 0.28s ease;
+    padding: 0 14px;
+  }
+  .sticky-consult-bar.open .scb-inner {
+    max-height: 120px; opacity: 1; padding: 0 14px 14px;
+  }
+  .scb-input {
+    flex: 1; min-width: 0; background: var(--bg-soft); border: 1px solid var(--panel-border);
+    border-radius: 9px; padding: 11px 12px; font-size: 13px; color: var(--ink); font-family: var(--sans);
+  }
+  .scb-input::placeholder { color: var(--ink-faint); }
+  .scb-input:focus { outline: none; border-color: var(--signal); }
+  .scb-btn {
+    flex-shrink: 0; background: var(--signal); color: #062622; border: none; border-radius: 9px;
+    padding: 11px 16px; font-size: 13.5px; font-weight: 700; font-family: var(--sans); cursor: pointer;
+    transition: background 0.2s ease;
+  }
+  .scb-btn:hover { background: var(--signal-strong); }
+  @media (max-width: 420px) {
+    .scb-inner { flex-wrap: wrap; }
+    .scb-input { flex: 1 1 100%; }
+    .scb-btn { flex: 1 1 100%; }
+    .sticky-consult-bar.open .scb-inner { max-height: 220px; }
+  }
+
+  /* ===== floating action buttons (right side) ===== */
+  .float-actions {
+    position: fixed; right: 16px; bottom: 86px; z-index: 60;
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  .fab {
+    width: 50px; height: 50px; border-radius: 50%; border: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 14px rgba(22,33,58,0.18);
+    opacity: 0.7;
+    transition: transform 0.15s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+  }
+  .fab:hover { transform: translateY(-2px) scale(1.05); box-shadow: 0 6px 18px rgba(22,33,58,0.22); opacity: 1; }
+  .fab-kakao { background: #FEE500; color: #381E1E; }
+  .fab-call { background: var(--signal); color: #062622; }
+  .fab-back { background: var(--panel); color: var(--ink-dim); border: 1px solid var(--panel-border); }
+  .fab-top { background: var(--panel); color: var(--ink-dim); border: 1px solid var(--panel-border); }
+  @media (max-width: 480px) {
+    .float-actions { right: 12px; bottom: 78px; }
+    .fab { width: 46px; height: 46px; opacity: 0.8; }
   }
 </style>
 </head>
@@ -386,42 +619,65 @@
 
   <header>
     <button class="brand" id="brandBtn" title="">
-      <span class="dot"></span>
-      <div>인터넷달인<div class="sub">INTERNET DALIN</div></div>
+      <div>인터넷달인</div>
     </button>
-    <div class="signal-bars"><span></span><span></span><span></span><span></span></div>
+    <div class="header-right">
+      <a class="header-tel" href="tel:1855-2823">
+        <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        1855-2823
+      </a>
+      <div class="signal-bars"><span></span><span></span><span></span><span></span></div>
+    </div>
   </header>
 
   <!-- =================== LANDING VIEW =================== -->
   <div id="view-landing">
     <div class="landing-hero">
-      <div class="promo-badge"><span class="spark">⚡</span> 인터넷 최대 사은품 지급 중</div>
-      <h1>우리집·우리 매장에 맞는<br><em>인터넷 견적</em>, 1분이면 받아요</h1>
-      <p>유형만 골라주시면 딱 맞는 상품으로 견적을 안내해드려요.</p>
+      <div class="promo-badge">인터넷 가입 시 최대 사은품 지급</div>
+      <h1>인터넷견적! 1분이면 OK</h1>
+      <p>통신사와 상품만 골라주시면<br>요금과 사은품을 바로 보여드려요</p>
       <div class="cta-area">
-        <button class="btn-quote" id="btnStartQuote">인터넷 상품 견적 받기 <span class="arrow">→</span></button>
-        <div class="cta-sub">설치 유형 선택 → 통신사 비교 → 맞춤 요금 확인</div>
+        <button class="btn-quote" id="btnStartQuote">인터넷 상품 견적 받기</button>
       </div>
-    </div>
-    <div class="placeholder-section">
-      <div class="ph-label">콘텐츠 영역 (추후 작성)</div>
-      이벤트·혜택·고객후기 등 상세 설명이 들어갈 자리입니다.
     </div>
   </div>
 
-  <!-- =================== FLOW VIEW (category → carrier → config → gift) =================== -->
+  <!-- =================== FLOW VIEW (carrier → config → gift) =================== -->
   <div id="view-flow" style="display:none;">
-    <div class="flow-header">
-      <div class="back-row">
-        <button class="btn-back" id="btnBack"><span class="ico">←</span> 이전</button>
-        <div class="breadcrumb" id="breadcrumb"></div>
-      </div>
-    </div>
     <div id="flowContent"></div>
   </div>
 
   <footer>인터넷달인 © 2026 · 본 화면은 데모이며 실제 통신사 가입과 무관합니다</footer>
 
+</div>
+
+<!-- =================== STICKY BOTTOM CONSULT BAR =================== -->
+<div class="sticky-consult-bar" id="stickyConsultBar">
+  <button class="scb-handle" id="scbHandle">
+    <span class="scb-handle-bar"></span>
+    <span class="scb-handle-text">📩 빠른 상담 요청하기</span>
+  </button>
+  <div class="scb-inner" id="scbInner">
+    <input type="text" id="scbName" class="scb-input" placeholder="이름">
+    <input type="tel" id="scbPhone" class="scb-input" placeholder="연락처 (010-0000-0000)">
+    <button class="scb-btn" id="scbSubmit">상담 요청</button>
+  </div>
+</div>
+
+<!-- =================== FLOATING SIDE BUTTONS =================== -->
+<div class="float-actions" id="floatActions">
+  <button class="fab fab-top" id="fabToTop" title="맨 위로">
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+  </button>
+  <button class="fab fab-kakao" id="fabKakao" title="카카오 상담">
+    <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M12 3C6.48 3 2 6.58 2 11c0 2.86 1.95 5.36 4.86 6.78-.16.6-.96 3.38-.99 3.6 0 0-.02.16.08.22.1.06.22.02.22.02.3-.04 3.45-2.26 4-2.64.6.08 1.22.13 1.83.13 5.52 0 10-3.58 10-8s-4.48-8-10-8z"/></svg>
+  </button>
+  <button class="fab fab-call" id="fabCall" title="전화 연결">
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+  </button>
+  <button class="fab fab-back" id="fabBack" title="뒤로가기">
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+  </button>
 </div>
 
 <!-- =================== ADMIN PASSWORD MODAL =================== -->
@@ -450,6 +706,35 @@
   </div>
 </div>
 
+<!-- =================== PRIVACY POLICY MODAL =================== -->
+<div class="admin-overlay" id="privacyModalOverlay" style="display:none;">
+  <div class="admin-modal privacy-modal">
+    <h3>개인정보 수집·이용 안내</h3>
+    <div class="privacy-body">
+      <p><strong>1. 수집 항목</strong><br>이름, 연락처, 주소(시/도·시/군/구·동), 건물형식, 기존 통신사 정보</p>
+      <p><strong>2. 수집 목적</strong><br>인터넷·TV 상품 견적 안내 및 가입 상담을 위한 연락 목적으로만 사용해요.</p>
+      <p><strong>3. 보유 및 이용 기간</strong><br>상담 완료 후 일정 기간 보관 후 파기하며, 법령에 따라 보관이 필요한 경우 그 기간 동안 보관해요.</p>
+      <p><strong>4. 동의 거부 권리</strong><br>동의를 거부할 수 있으며, 거부 시 견적·상담 신청이 제한될 수 있어요.</p>
+    </div>
+    <div class="admin-modal-actions">
+      <button class="btn-small primary" id="privacyModalCloseBtn" style="flex:1;">확인</button>
+    </div>
+  </div>
+</div>
+
+<!-- =================== AREA CHECK MODAL =================== -->
+<div class="admin-overlay" id="areaModalOverlay" style="display:none;">
+  <div class="admin-modal privacy-modal area-modal">
+    <h3><span id="areaModalCarrierName">통신사</span> 설치 가능지역</h3>
+    <div class="privacy-body" id="areaModalBody">
+      <p>가능지역 정보를 준비 중이에요. 정확한 설치 가능 여부는 상담을 통해 확인해드릴게요.</p>
+    </div>
+    <div class="admin-modal-actions">
+      <button class="btn-small primary" id="areaModalCloseBtn" style="flex:1;">확인</button>
+    </div>
+  </div>
+</div>
+
 <!-- =================== ADMIN PAGE =================== -->
 <div class="admin-page" id="view-admin" style="display:none;">
   <div class="admin-topbar">
@@ -467,37 +752,67 @@
   const CARRIERS = [
     { id: 'carrier-kt', code: 'KT', name: 'KT', logo: 'KT', speeds: [100, 500, 1000], tvMode: 'base-extra',
       tvOptions: [
-        { id: 'basic', label: '베이직', isBase: true },
-        { id: 'lite', label: '라이트' },
-        { id: 'essence', label: '에센스' },
-        { id: 'allgtv', label: '모든GTV' }
+        { id: 'basic', label: '베이직', isBase: true, tier: 1 },
+        { id: 'lite', label: '라이트', tier: 2 },
+        { id: 'essence', label: '에센스', tier: 3 },
+        { id: 'allgtv', label: '모든GTV', tier: 4 }
+      ],
+      extraTvOptions: [
+        { id: 'basic', label: '베이직', tier: 1 },
+        { id: 'lite', label: '라이트', tier: 2 },
+        { id: 'essence', label: '에센스', tier: 3 },
+        { id: 'allgtv', label: '모든GTV', tier: 4 }
       ] },
     { id: 'carrier-skb', code: 'SKB', name: 'SK브로드밴드', logo: 'SKB', speeds: [100, 500, 1000], tvMode: 'delta',
       tvOptions: [
-        { id: 'economy', label: '이코노미' },
-        { id: 'standard', label: '스탠다드', isBase: true },
-        { id: 'all', label: 'ALL' }
+        { id: 'economy', label: '이코노미', isBase: true, tier: 1 },
+        { id: 'standard', label: '스탠다드', tier: 2 },
+        { id: 'all', label: 'ALL', tier: 3 }
+      ],
+      extraTvOptions: [
+        { id: 'economy', label: '이코노미', tier: 1 },
+        { id: 'standard', label: '스탠다드', tier: 2 },
+        { id: 'all', label: 'ALL', tier: 3 }
       ] },
     { id: 'carrier-lgu', code: 'LGU+', name: 'LG유플러스', logo: 'LGU+', speeds: [100, 500, 1000], tvMode: 'delta',
       tvOptions: [
-        { id: 'lite', label: '실속형', isBase: true },
-        { id: 'standard', label: '기본형' },
-        { id: 'premium', label: '프리미엄' }
+        { id: 'lite', label: '실속형', isBase: true, tier: 1 },
+        { id: 'premium', label: '프리미엄', tier: 2 }
+      ],
+      extraTvOptions: [
+        { id: 'lite', label: '실속형', tier: 1 },
+        { id: 'premium', label: '프리미엄', tier: 2 }
       ] },
     { id: 'carrier-skylife', code: 'SKY', name: 'KT스카이라이프', logo: 'SKY', speeds: [100, 200, 500, 1000], tvMode: 'delta',
       tvOptions: [
-        { id: 'basic', label: '베이직', isBase: true },
-        { id: 'plus', label: '플러스' }
+        { id: 'basic', label: '베이직', isBase: true, tier: 1 },
+        { id: 'plus', label: '플러스', tier: 2 }
+      ],
+      extraTvOptions: [
+        { id: 'basic', label: '베이직', tier: 1 },
+        { id: 'plus', label: '플러스', tier: 2 }
       ] },
     { id: 'carrier-skpop', code: 'POP', name: 'SK POP', logo: 'POP', speeds: [100, 500, 1000], tvMode: 'delta',
       tvOptions: [
-        { id: 'pop180', label: 'POP180', isBase: true },
-        { id: 'pop230', label: 'POP230' }
+        { id: 'pop180', label: 'POP180', isBase: true, tier: 1 },
+        { id: 'pop230', label: 'POP230', tier: 2 }
+      ],
+      extraTvOptions: [
+        { id: 'pop180', label: 'POP180', tier: 1 },
+        { id: 'pop230', label: 'POP230', tier: 2 }
       ] },
-    { id: 'carrier-lghello', code: 'HELLO', name: 'LG헬로비전', logo: 'HV', speeds: [100, 500, 1000], tvMode: 'independent',
+    { id: 'carrier-lghello', code: 'HELLO', name: 'LG헬로비전', logo: 'HV', speeds: [160, 500, 1000], tvMode: 'independent',
       tvOptions: [
-        { id: 'prolite', label: 'PRO라이트' },
-        { id: 'promax', label: 'PRO맥스' }
+        { id: 'uhdecon', label: 'UHD이코노미', isBase: true, signalType: '케이블', tier: 1 },
+        { id: 'prolite', label: 'PRO라이트', signalType: 'IPTV', tier: 2 },
+        { id: 'promax', label: 'PRO맥스', signalType: 'IPTV', tier: 3 }
+      ],
+      extraTvOptions: [
+        { id: 'uhdecon', label: 'UHD이코노미', signalType: '케이블', tier: 1 },
+        { id: 'uhdnewbasic', label: 'UHD뉴베이직', signalType: '케이블', tier: 1 },
+        { id: 'uhdpremium', label: 'UHD프리미엄', signalType: '케이블', tier: 1 },
+        { id: 'prolite', label: 'PRO라이트', signalType: 'IPTV', tier: 2 },
+        { id: 'promax', label: 'PRO맥스', signalType: 'IPTV', tier: 3, promo: '프로모션 할인 -1,100원 적용' }
       ] }
   ];
 
@@ -549,13 +864,28 @@
       internetTv[sp] = perOption;
     });
 
+    // 추가TV: 속도와 무관하게 상품별 단일 월요금/사은품 (메인 TV와는 별도 테이블)
+    const extraTv = {};
+    (c.extraTvOptions || []).forEach((opt, oi) => {
+      extraTv[opt.id] = { price: 9000 + oi * 1500, gift: 30000 };
+    });
+
+    // TV상품별 채널수 (관리자가 직접 입력하는 텍스트값, 예: "230채널", "260채널+VOD무료")
+    const channelCounts = {};
+    c.tvOptions.forEach(opt => { channelCounts[opt.id] = ''; });
+
     DEFAULT_PRICING[c.id] = {
       internetOnly,
       internetTv,
+      extraTv,
+      channelCounts,
       wifi: 1100,
       phoneGeneral: 1100,
       phoneInternet: 2200,
+      phoneFax: 1100,
       comboDiscount: 3300 + idx * 500,
+      installFeeOnly: 36300,
+      installFeeTv: 56100,
       commonGifts: []
     };
   });
@@ -593,93 +923,409 @@
     wifi: 1100,
     phoneGeneral: 1100,
     phoneInternet: 2200,
+    phoneFax: 1100,
     comboDiscount: 3300,
+    installFeeOnly: 36300,
+    installFeeTv: 56100,
+    extraTv: {
+      basic:  { price: 9900, gift: 30000 },
+      lite:   { price: 11000, gift: 30000 },
+      essence:{ price: 12100, gift: 30000 },
+      allgtv: { price: 13200, gift: 30000 }
+    },
+    channelCounts: {
+      basic: '230채널',
+      lite: '235채널',
+      essence: '260채널',
+      allgtv: '260채널+VOD무료'
+    },
     commonGifts: []
   };
   PRICING['carrier-kt'] = JSON.parse(JSON.stringify(DEFAULT_PRICING['carrier-kt']));
 
-  const TREE = {
-    id: 'root', title: '상품 유형 선택', eyebrow: 'STEP 1', desc: '설치할 공간의 유형을 먼저 선택해주세요.',
-    children: [
-      {
-        id: '1-1', code: '1-1', icon: '🏠', title: '일반상품', desc: '주거용 공간에 설치하는 일반 인터넷', eyebrow: 'STEP 2',
-        children: [
-          { id: '1-1-1', code: '1-1-1', icon: '🏢', title: '아파트 / 오피스텔', desc: '공동주택, 오피스텔 거주 고객용', eyebrow: 'STEP 3', isCarrierStep: true },
-          { id: '1-1-2', code: '1-1-2', icon: '🏘️', title: '단독주택 / 빌라 / 원룸', desc: '단독주택, 빌라, 원룸 거주 고객용', eyebrow: 'STEP 3', isCarrierStep: true }
-        ]
+  // ---- LG헬로비전 확정 기본값 ----
+  // TV상품(UHD이코노미/PRO라이트/PRO맥스)은 independent 모드라 옵션별 price/gift를 절대값으로 입력
+  //  - UHD이코노미: 케이블 방식 / PRO라이트·PRO맥스: IPTV 방식 (carrierMeta의 signalType에 표시용으로 저장됨)
+  //  - 사은품(gift)은 안내받은 값이 없어 임시로 인터넷단독 10만원 / TV포함 20만원으로 설정 (관리자 패널에서 수정 가능)
+  DEFAULT_PRICING['carrier-lghello'] = {
+    internetOnly: {
+      160:  { price: 27610, mobileComboPrice: 22080, gift: 100000 },
+      500:  { price: 31460, mobileComboPrice: 25160, gift: 100000 },
+      1000: { price: 33000, mobileComboPrice: 23100, gift: 100000 }
+    },
+    internetTv: {
+      160: {
+        uhdecon: { price: 37560, mobileComboPrice: 32040, gift: 200000 },
+        prolite: { price: 37560 + 2200, mobileComboPrice: 32040 + 2200, gift: 200000 },
+        promax:  { price: 37560 + 4400, mobileComboPrice: 32040 + 4400, gift: 200000 }
       },
-      {
-        id: '1-2', code: '1-2', icon: '🏬', title: '사업장상품', desc: '상업용 공간에 설치하는 사업장 전용 인터넷', eyebrow: 'STEP 2',
-        children: [
-          { id: '1-2-1', code: '1-2-1', icon: '🏪', title: '상가 / 사무실', desc: '일반 상가, 사무공간용', eyebrow: 'STEP 3', isCarrierStep: true },
-          { id: '1-2-2', code: '1-2-2', icon: '🏨', title: '모텔 / 호텔 / 병원 외 단체상품', desc: '다수의 회선이 필요한 숙박·의료·단체시설용', eyebrow: 'STEP 3', isCarrierStep: true }
-        ]
+      // 500메가·1기가 PRO맥스는 프로모션으로 미결합/결합 요금 모두 1,100원 할인
+      500: {
+        uhdecon: { price: 40590, mobileComboPrice: 34290, gift: 200000 },
+        prolite: { price: 40590 + 2200, mobileComboPrice: 34290 + 2200, gift: 200000 },
+        promax:  { price: 40590 + 4400 - 1100, mobileComboPrice: 34290 + 4400 - 1100, gift: 200000 }
+      },
+      1000: {
+        uhdecon: { price: 41800, mobileComboPrice: 31900, gift: 200000 },
+        prolite: { price: 41800 + 2200, mobileComboPrice: 31900 + 2200, gift: 200000 },
+        promax:  { price: 41800 + 4400 - 1100, mobileComboPrice: 31900 + 4400 - 1100, gift: 200000 }
       }
-    ]
+    },
+    wifi: 0,
+    phoneGeneral: 1100,
+    phoneInternet: 1100,
+    phoneFax: 1100,
+    comboDiscount: 0,
+    installFeeOnly: 36300,
+    installFeeTv: 56100,
+    // 추가TV 요금 (속도 무관, 상품별 단일가). PRO맥스는 프로모션으로 1,100원 할인 적용.
+    extraTv: {
+      uhdecon:      { price: 9350, gift: 30000 },
+      uhdnewbasic:  { price: 11000, gift: 30000 },
+      uhdpremium:   { price: 12650, gift: 30000 },
+      prolite:      { price: 11550, gift: 30000 },
+      promax:       { price: 13750 - 1100, gift: 30000 }
+    },
+    channelCounts: {
+      uhdecon: '108채널',
+      prolite: '222채널',
+      promax: '247채널'
+    },
+    extraChannelCounts: {
+      uhdecon: '108채널',
+      uhdnewbasic: '247채널',
+      uhdpremium: '247채널',
+      prolite: '222채널',
+      promax: '247채널'
+    },
+    commonGifts: []
   };
+  PRICING['carrier-lghello'] = JSON.parse(JSON.stringify(DEFAULT_PRICING['carrier-lghello']));
 
-  const SPEED_LABELS = { 100: '100메가', 200: '200메가', 500: '500메가', 1000: '1기가' };
+  // ---- SK브로드밴드 확정 기본값 ----
+  // TV상품은 delta 모드: 기준(이코노미)에 절대 가격/사은품, 스탠다드·ALL은 이코노미 기준 +3,300/+6,600원
+  //  - 사은품(gift) 액수는 안내받지 않아 임시로 인터넷단독 10만원 / TV포함 20만원으로 설정 (관리자 패널에서 수정 가능)
+  //  - 100메가 TV포함 상품의 와이파이(공유기)는 미결합 2,200원 / 결합 시 1,100원, 나머지 속도는 항상 1,100원 (getWifiCost에서 처리)
+  DEFAULT_PRICING['carrier-skb'] = {
+    internetOnly: {
+      100:  { price: 22000, mobileComboPrice: 17600, gift: 100000 },
+      500:  { price: 33000, mobileComboPrice: 22000, gift: 100000 },
+      1000: { price: 38500, mobileComboPrice: 25300, gift: 100000 }
+    },
+    internetTv: {
+      100: {
+        economy:  { price: 34100, mobileComboPrice: 30800, gift: 200000 },
+        standard: { price: 34100 + 3300, mobileComboPrice: 30800 + 3300, giftDelta: 0 },
+        all:      { price: 34100 + 6600, mobileComboPrice: 30800 + 6600, giftDelta: 0 }
+      },
+      500: {
+        economy:  { price: 41800, mobileComboPrice: 35200, gift: 200000 },
+        standard: { price: 41800 + 3300, mobileComboPrice: 35200 + 3300, giftDelta: 0 },
+        all:      { price: 41800 + 6600, mobileComboPrice: 35200 + 6600, giftDelta: 0 }
+      },
+      1000: {
+        economy:  { price: 47300, mobileComboPrice: 38500, gift: 200000 },
+        standard: { price: 47300 + 3300, mobileComboPrice: 38500 + 3300, giftDelta: 0 },
+        all:      { price: 47300 + 6600, mobileComboPrice: 38500 + 6600, giftDelta: 0 }
+      }
+    },
+    wifi: 1100,
+    phoneGeneral: 1100,
+    phoneInternet: 1100,
+    phoneFax: 1100,
+    comboDiscount: 0,
+    installFeeOnly: 36300,
+    installFeeTv: 56100,
+    extraTv: {
+      economy:  { price: 8250, gift: 30000 },
+      standard: { price: 9900, gift: 30000 },
+      all:      { price: 11550, gift: 30000 }
+    },
+    channelCounts: {
+      economy: '184채널',
+      standard: '226채널',
+      all: '252채널'
+    },
+    commonGifts: []
+  };
+  PRICING['carrier-skb'] = JSON.parse(JSON.stringify(DEFAULT_PRICING['carrier-skb']));
+
+  // ---- LG유플러스 확정 기본값 ----
+  // TV상품은 delta 모드: 기준(실속형)에 절대 가격/사은품, 프리미엄은 실속형 기준 +3,300원
+  //  - 인터넷단독 모바일결합가는 안내받지 않아 임시로 -5,500원 적용 (관리자 패널에서 정확한 값으로 수정 필요)
+  //  - 사은품(gift) 액수는 안내받지 않아 임시로 인터넷단독 10만원 / TV포함 20만원으로 설정 (관리자 패널에서 수정 가능)
+  //  - 와이파이는 항상 무료로 고정 (WIFI_ALWAYS_FREE_CARRIERS), 전화 메뉴는 없음 (PHONE_NONE_CARRIERS)
+  DEFAULT_PRICING['carrier-lgu'] = {
+    internetOnly: {
+      100:  { price: 22000, mobileComboPrice: 16500, gift: 100000 },
+      500:  { price: 33000, mobileComboPrice: 27500, gift: 100000 },
+      1000: { price: 38500, mobileComboPrice: 33000, gift: 100000 }
+    },
+    internetTv: {
+      100: {
+        lite:    { price: 39600, mobileComboPrice: 34100, gift: 200000 },
+        premium: { price: 39600 + 3300, mobileComboPrice: 34100 + 3300, giftDelta: 0 }
+      },
+      500: {
+        lite:    { price: 45100, mobileComboPrice: 35200, gift: 200000 },
+        premium: { price: 45100 + 3300, mobileComboPrice: 35200 + 3300, giftDelta: 0 }
+      },
+      1000: {
+        lite:    { price: 50600, mobileComboPrice: 37400, gift: 200000 },
+        premium: { price: 50600 + 3300, mobileComboPrice: 37400 + 3300, giftDelta: 0 }
+      }
+    },
+    wifi: 0,
+    phoneGeneral: 1100,
+    phoneInternet: 1100,
+    phoneFax: 1100,
+    comboDiscount: 0,
+    installFeeOnly: 36300,
+    installFeeTv: 56100,
+    extraTv: {
+      lite:    { price: 9900, gift: 30000 },
+      premium: { price: 11550, gift: 30000 }
+    },
+    channelCounts: {
+      lite: '216채널',
+      premium: '254채널'
+    },
+    commonGifts: []
+  };
+  PRICING['carrier-lgu'] = JSON.parse(JSON.stringify(DEFAULT_PRICING['carrier-lgu']));
+
+  // ---- KT스카이라이프 확정 기본값 ----
+  // TV상품은 delta 모드: 기준(베이직)에 절대 가격/사은품, 플러스는 베이직 기준 +1,100원
+  //  - 모바일결합가는 안내받지 않아 임시로 -5,500원 적용 (관리자 패널에서 정확한 값으로 수정 필요)
+  //  - 사은품(gift) 액수는 안내받지 않아 임시로 인터넷단독 10만원 / TV포함 20만원으로 설정 (관리자 패널에서 수정 가능)
+  //  - 100메가는 와이파이 1,100원, 200/500/1000메가는 무료, 전화 메뉴는 없음
+  DEFAULT_PRICING['carrier-skylife'] = {
+    internetOnly: {
+      100:  { price: 22000, mobileComboPrice: 16500, gift: 100000 },
+      200:  { price: 24200, mobileComboPrice: 18700, gift: 100000 },
+      500:  { price: 33000, mobileComboPrice: 27500, gift: 100000 },
+      1000: { price: 38500, mobileComboPrice: 33000, gift: 100000 }
+    },
+    internetTv: {
+      100: {
+        basic: { price: 33000, mobileComboPrice: 27500, gift: 200000 },
+        plus:  { price: 33000 + 1100, mobileComboPrice: 27500 + 1100, giftDelta: 0 }
+      },
+      200: {
+        basic: { price: 35200, mobileComboPrice: 29700, gift: 200000 },
+        plus:  { price: 35200 + 1100, mobileComboPrice: 29700 + 1100, giftDelta: 0 }
+      },
+      500: {
+        basic: { price: 40700, mobileComboPrice: 35200, gift: 200000 },
+        plus:  { price: 40700 + 1100, mobileComboPrice: 35200 + 1100, giftDelta: 0 }
+      },
+      1000: {
+        basic: { price: 46200, mobileComboPrice: 40700, gift: 200000 },
+        plus:  { price: 46200 + 1100, mobileComboPrice: 40700 + 1100, giftDelta: 0 }
+      }
+    },
+    wifi: 1100,
+    phoneGeneral: 1100,
+    phoneInternet: 1100,
+    phoneFax: 1100,
+    comboDiscount: 0,
+    installFeeOnly: 36000,
+    installFeeTv: 48500,
+    extraTv: {
+      basic: { price: 7700, gift: 30000 },
+      plus:  { price: 8250, gift: 30000 }
+    },
+    channelCounts: {
+      basic: '194채널',
+      plus: '209채널'
+    },
+    commonGifts: []
+  };
+  PRICING['carrier-skylife'] = JSON.parse(JSON.stringify(DEFAULT_PRICING['carrier-skylife']));
+
+  // ---- SK POP 확정 기본값 ----
+  // 인터넷단독은 SK브로드밴드와 동일. TV상품은 delta 모드: 기준(POP180)에 절대 가격/사은품, POP230은 +1,100원
+  //  - 사은품(gift) 액수는 안내받지 않아 임시로 인터넷단독 10만원 / TV포함 20만원으로 설정 (관리자 패널에서 수정 가능)
+  //  - 100메가 TV포함 상품의 와이파이(공유기)는 미결합 2,200원 / 결합 시 1,100원, 나머지 속도는 항상 1,100원 (getWifiCost에서 처리)
+  //  - 전화 메뉴는 없음
+  DEFAULT_PRICING['carrier-skpop'] = {
+    internetOnly: {
+      100:  { price: 22000, mobileComboPrice: 17600, gift: 100000 },
+      500:  { price: 33000, mobileComboPrice: 22000, gift: 100000 },
+      1000: { price: 38500, mobileComboPrice: 25300, gift: 100000 }
+    },
+    internetTv: {
+      100: {
+        pop180: { price: 30800, mobileComboPrice: 28600, gift: 200000 },
+        pop230: { price: 30800 + 1100, mobileComboPrice: 28600 + 1100, giftDelta: 0 }
+      },
+      500: {
+        pop180: { price: 38500, mobileComboPrice: 33000, gift: 200000 },
+        pop230: { price: 38500 + 1100, mobileComboPrice: 33000 + 1100, giftDelta: 0 }
+      },
+      1000: {
+        pop180: { price: 44000, mobileComboPrice: 36300, gift: 200000 },
+        pop230: { price: 44000 + 1100, mobileComboPrice: 36300 + 1100, giftDelta: 0 }
+      }
+    },
+    wifi: 1100,
+    phoneGeneral: 1100,
+    phoneInternet: 1100,
+    phoneFax: 1100,
+    comboDiscount: 0,
+    installFeeOnly: 36300,
+    installFeeTv: 56100,
+    extraTv: {
+      pop180: { price: 7700, gift: 30000 },
+      pop230: { price: 9900, gift: 30000 }
+    },
+    channelCounts: {
+      pop180: '180채널',
+      pop230: '230채널'
+    },
+    commonGifts: []
+  };
+  PRICING['carrier-skpop'] = JSON.parse(JSON.stringify(DEFAULT_PRICING['carrier-skpop']));
+
+  const SPEED_LABELS = { 100: '100메가', 160: '160메가', 200: '200메가', 500: '500메가', 1000: '1기가' };
+
+  // ---- 주소(시/도 → 시/군/구) 데이터: 전국 226개 기초자치단체 전체 포함, 동/읍/면은 직접 입력 ----
+  // ※ 2026년 7월 1일부터 인천광역시 중구·동구가 폐지되고 제물포구·영종구·검단구가 신설될 예정이나,
+  //    이 목록은 그 이전(현재) 행정구역 기준입니다. 개편 이후 업데이트가 필요합니다.
+  const ADDRESS_DATA = {
+    '서울특별시': [
+      '종로구', '중구', '용산구', '성동구', '광진구', '동대문구', '중랑구',
+      '성북구', '강북구', '도봉구', '노원구', '은평구', '서대문구', '마포구',
+      '양천구', '강서구', '구로구', '금천구', '영등포구', '동작구', '관악구',
+      '서초구', '강남구', '송파구', '강동구'
+    ],
+    '부산광역시': [
+      '중구', '서구', '동구', '영도구', '부산진구', '동래구', '남구', '북구',
+      '해운대구', '사하구', '금정구', '강서구', '연제구', '수영구', '사상구', '기장군'
+    ],
+    '대구광역시': ['중구', '동구', '서구', '남구', '북구', '수성구', '달서구', '달성군', '군위군'],
+    '인천광역시': ['중구', '동구', '미추홀구', '연수구', '남동구', '부평구', '계양구', '서구', '강화군', '옹진군'],
+    '광주광역시': ['동구', '서구', '남구', '북구', '광산구'],
+    '대전광역시': ['동구', '중구', '서구', '유성구', '대덕구'],
+    '울산광역시': ['중구', '남구', '동구', '북구', '울주군'],
+    '세종특별자치시': ['세종시'],
+    '경기도': [
+      '수원시 장안구', '수원시 권선구', '수원시 팔달구', '수원시 영통구',
+      '성남시 수정구', '성남시 중원구', '성남시 분당구',
+      '의정부시', '안양시 만안구', '안양시 동안구',
+      '부천시 원미구', '부천시 소사구', '부천시 오정구',
+      '광명시', '평택시', '동두천시',
+      '안산시 상록구', '안산시 단원구',
+      '고양시 덕양구', '고양시 일산동구', '고양시 일산서구',
+      '과천시', '구리시', '남양주시', '오산시', '시흥시', '군포시', '의왕시',
+      '하남시', '용인시 처인구', '용인시 기흥구', '용인시 수지구',
+      '파주시', '이천시', '안성시', '김포시', '화성시', '광주시', '양주시',
+      '포천시', '여주시',
+      '연천군', '가평군', '양평군'
+    ],
+    '강원특별자치도': [
+      '춘천시', '원주시', '강릉시', '동해시', '태백시', '속초시', '삼척시',
+      '홍천군', '횡성군', '영월군', '평창군', '정선군', '철원군', '화천군',
+      '양구군', '인제군', '고성군', '양양군'
+    ],
+    '충청북도': [
+      '청주시 상당구', '청주시 서원구', '청주시 흥덕구', '청주시 청원구',
+      '충주시', '제천시',
+      '보은군', '옥천군', '영동군', '증평군', '진천군', '괴산군', '음성군', '단양군'
+    ],
+    '충청남도': [
+      '천안시 동남구', '천안시 서북구', '공주시', '보령시', '아산시', '서산시',
+      '논산시', '계룡시', '당진시',
+      '금산군', '부여군', '서천군', '청양군', '홍성군', '예산군', '태안군'
+    ],
+    '전북특별자치도': [
+      '전주시 완산구', '전주시 덕진구', '군산시', '익산시', '정읍시', '남원시', '김제시',
+      '완주군', '진안군', '무주군', '장수군', '임실군', '순창군', '고창군', '부안군'
+    ],
+    '전라남도': [
+      '목포시', '여수시', '순천시', '나주시', '광양시',
+      '담양군', '곡성군', '구례군', '고흥군', '보성군', '화순군', '장흥군',
+      '강진군', '해남군', '영암군', '무안군', '함평군', '영광군', '장성군',
+      '완도군', '진도군', '신안군'
+    ],
+    '경상북도': [
+      '포항시 남구', '포항시 북구', '경주시', '김천시', '안동시', '구미시', '영주시',
+      '영천시', '상주시', '문경시', '경산시',
+      '의성군', '청송군', '영양군', '영덕군', '청도군', '고령군', '성주군',
+      '칠곡군', '예천군', '봉화군', '울진군', '울릉군'
+    ],
+    '경상남도': [
+      '창원시 의창구', '창원시 성산구', '창원시 마산합포구', '창원시 마산회원구', '창원시 진해구',
+      '진주시', '통영시', '사천시', '김해시', '밀양시', '거제시', '양산시',
+      '의령군', '함안군', '창녕군', '고성군', '남해군', '하동군', '산청군',
+      '함양군', '거창군', '합천군'
+    ],
+    '제주특별자치도': ['제주시', '서귀포시']
+  };
+  const BUILDING_TYPES = [
+    { id: 'apt', label: '아파트' },
+    { id: 'villa', label: '빌라' },
+    { id: 'officetel', label: '오피스텔' },
+    { id: 'house', label: '단독주택' },
+    { id: 'oneroom', label: '원룸' }
+  ];
+  const EXISTING_CARRIER_OPTIONS = [
+    { id: 'kt', label: 'KT' },
+    { id: 'skb', label: 'SK브로드밴드' },
+    { id: 'lgu', label: 'LG유플러스' },
+    { id: 'etc', label: '기타' },
+    { id: 'none', label: '없음 / 신규 설치' }
+  ];
+
   const WIFI_OPTIONS = [
     { id: 'yes', label: '와이파이 사용', priceLabel: null },
     { id: 'no', label: '와이파이 미선택', priceLabel: '0원' }
   ];
-  const PHONE_OPTIONS = [
+  // 통신사 그룹별 전화 옵션
+  //  - KT: 일반전화 / 인터넷전화
+  //  - SK브로드밴드: 일반전화만 선택 가능
+  //  - LG헬로비전, LG유플러스, KT스카이라이프, SK POP: 전화 메뉴 없음
+  const PHONE_OPTIONS_STANDARD = [
     { id: 'general', label: '일반전화' },
     { id: 'internet', label: '인터넷전화' },
     { id: 'none', label: '전화 미선택' }
   ];
+  const PHONE_OPTIONS_GENERAL_ONLY = [
+    { id: 'general', label: '일반전화' },
+    { id: 'none', label: '전화 미선택' }
+  ];
+  const PHONE_GENERAL_ONLY_CARRIERS = ['carrier-skb'];
+  const PHONE_NONE_CARRIERS = ['carrier-skylife', 'carrier-lghello', 'carrier-lgu', 'carrier-skpop'];
+  function getPhoneOptions(carrierId) {
+    if (PHONE_NONE_CARRIERS.includes(carrierId)) return [];
+    if (PHONE_GENERAL_ONLY_CARRIERS.includes(carrierId)) return PHONE_OPTIONS_GENERAL_ONLY;
+    return PHONE_OPTIONS_STANDARD;
+  }
+  // 호환성을 위해 기본값은 표준 옵션을 가리킴
+  const PHONE_OPTIONS = PHONE_OPTIONS_STANDARD;
 
   function won(n) { return n.toLocaleString('ko-KR'); }
   function wonSigned(n) { return (n >= 0 ? '+' : '') + n.toLocaleString('ko-KR'); }
 
 
   // ================= App navigation state =================
-  // flowPath: array describing the drill-down through category tree (node ids)
-  // selection: { carrierId, productType('internetOnly'|'internetTv'), speed, wifi, phone }
-  let flowPath = [];
+  // selection: { carrierId, productType('internetOnly'|'internetTv'), speed, wifi, phone, tvOption,
+  //              name, sido, sigungu, dong, buildingType, phoneNumber, existingCarrier }
   let selection = {};
-  let flowStage = 'category'; // 'category' | 'productType' | 'speed' | 'wifi' | 'phone' | 'gift'
+  let flowStage = 'carrier'; // 'carrier' | 'productType' | 'configOnly' | 'configTv' | 'gift'
+  let openDropdown = null; // id of currently expanded dropdown on the current stage screen
 
   const viewLanding = document.getElementById('view-landing');
   const viewFlow = document.getElementById('view-flow');
   const flowContent = document.getElementById('flowContent');
-  const breadcrumbEl = document.getElementById('breadcrumb');
-  const btnBack = document.getElementById('btnBack');
   const btnStartQuote = document.getElementById('btnStartQuote');
-
-  function findCategoryNode(idPath) {
-    let node = TREE;
-    for (const id of idPath) {
-      node = node.children.find(c => c.id === id);
-      if (!node) return null;
-    }
-    return node;
-  }
-
-  function currentCategoryNode() {
-    return findCategoryNode(flowPath);
-  }
 
   function carrierById(id) {
     return CARRIERS.find(c => c.id === id);
   }
 
-  // ---------------- breadcrumb ----------------
   function renderBreadcrumb() {
-    const segs = ['상품선택'];
-    flowPath.forEach((id, i) => {
-      const n = findCategoryNode(flowPath.slice(0, i + 1));
-      segs.push(n ? n.code : id);
-    });
-    if (selection.carrierId) segs.push(carrierById(selection.carrierId).code);
-    if (selection.productType) segs.push(selection.productType === 'internetOnly' ? '인터넷단독' : '인터넷+TV');
-    if (selection.speed) segs.push(selection.speed + 'M');
-    if (selection.wifi) segs.push('WiFi');
-    if (selection.phone) segs.push('전화');
-    breadcrumbEl.innerHTML = segs.map((s, i) => {
-      const isLast = i === segs.length - 1;
-      return `<span class="seg ${isLast ? 'active' : ''}">${s}</span>${i < segs.length - 1 ? ' / ' : ''}`;
-    }).join('');
+    // breadcrumb display removed; this stays as a no-op so existing call sites don't need to change.
   }
 
   // ---------------- TV option resolution ----------------
@@ -711,6 +1357,26 @@
   }
 
   // ---------------- live price calculation ----------------
+  // 통신사별 와이파이 요금 규칙 (getWifiCost에서 사용, 관리자 입력값보다 우선 적용)
+  const WIFI_FIXED_CARRIERS = ['carrier-lgu', 'carrier-lghello', 'carrier-skb', 'carrier-skpop', 'carrier-skylife'];
+  const WIFI_ALWAYS_FREE_CARRIERS = ['carrier-lgu', 'carrier-lghello']; // 속도와 무관하게 항상 무료인 통신사
+  const WIFI_RULE_NOTE = {
+    'carrier-lgu': '이 통신사는 와이파이가 항상 무료로 고정돼 있어 수정할 수 없어요.',
+    'carrier-lghello': '이 통신사는 와이파이가 항상 무료로 고정돼 있어 수정할 수 없어요.',
+    'carrier-skb': '이 통신사는 100메가 가입 시 2,200원, 나머지 속도는 1,100원으로 고정돼 있어 수정할 수 없어요.',
+    'carrier-skpop': '이 통신사는 100메가 가입 시 2,200원, 나머지 속도는 1,100원으로 고정돼 있어 수정할 수 없어요.',
+    'carrier-skylife': '이 통신사는 100메가 가입 시 1,100원, 나머지 속도는 무료로 고정돼 있어 수정할 수 없어요.'
+  };
+
+  // 선택된 통신사+속도 조합에서 와이파이가 "무료 고정"인지 판단 (true면 드롭다운에 무료 옵션 하나만 표시)
+  //  - LG유플러스, LG헬로비전: 속도와 무관하게 항상 무료
+  //  - KT스카이라이프: 200메가 이상이면 무료 (100메가는 1,100원 그대로 선택 가능하게 유지)
+  function isWifiFreeForSelection(carrierId, speed) {
+    if (WIFI_ALWAYS_FREE_CARRIERS.includes(carrierId)) return true;
+    if (carrierId === 'carrier-skylife' && speed && speed !== 100) return true;
+    return false;
+  }
+
   function calcPrice() {
     const p = PRICING[selection.carrierId];
     if (!p) return null;
@@ -729,23 +1395,157 @@
       mobileComboPrice = data.mobileComboPrice;
     }
 
-    const wifiCost = selection.wifi === 'yes' ? p.wifi : 0;
+    // 추가 TV (2대 이상 선택 시): 상품별 단일 월요금 + 사은품을 그대로 합산
+    let extraTvCost = 0;
+    let extraTvGift = 0;
+    if (selection.productType === 'internetTv' && Array.isArray(selection.extraTvOptions)) {
+      selection.extraTvOptions.forEach(optId => {
+        if (!optId || !p.extraTv || !p.extraTv[optId]) return;
+        extraTvCost += p.extraTv[optId].price || 0;
+        extraTvGift += p.extraTv[optId].gift || 0;
+      });
+    }
+    base += extraTvCost;
+    gift += extraTvGift;
+    mobileComboPrice += extraTvCost;
+
+    const wifiCost = selection.wifi === 'yes' ? getWifiCost(selection.carrierId, selection.speed, false) : 0;
+    const wifiCostCombo = selection.wifi === 'yes' ? getWifiCost(selection.carrierId, selection.speed, true) : 0;
     let phoneCost = 0;
     if (selection.phone === 'general') phoneCost = p.phoneGeneral;
     else if (selection.phone === 'internet') phoneCost = p.phoneInternet;
+    else if (selection.phone === 'fax') phoneCost = p.phoneFax;
     const total = base + wifiCost + phoneCost;
     const comboTotal = total - p.comboDiscount;
-    return { base, wifiCost, phoneCost, total, comboDiscount: p.comboDiscount, comboTotal, gift, mobileComboPrice };
+    const mobileComboTotal = mobileComboPrice + wifiCostCombo + phoneCost;
+    return { base, wifiCost, phoneCost, extraTvCost, extraTvGift, total, comboDiscount: p.comboDiscount, comboTotal, gift, mobileComboPrice: mobileComboTotal };
+  }
+
+  // 통신사별 와이파이(공유기) 임대 요금 규칙
+  //  - LG유플러스, LG헬로비전: 항상 무료
+  //  - SK브로드밴드, SK POP: 100메가는 2,200원(모바일 결합 시 1,100원) / 나머지 속도는 1,100원
+  //  - KT스카이라이프: 100메가는 1,100원 / 나머지 속도는 무료
+  //  - 그 외(KT 등): 관리자 설정값(p.wifi) 그대로 사용
+  function getWifiCost(carrierId, speed, isMobileCombo) {
+    if (carrierId === 'carrier-lgu' || carrierId === 'carrier-lghello') return 0;
+    if (carrierId === 'carrier-skb' || carrierId === 'carrier-skpop') {
+      if (speed === 100) return isMobileCombo ? 1100 : 2200;
+      return 1100;
+    }
+    if (carrierId === 'carrier-skylife') return speed === 100 ? 1100 : 0;
+    const p = PRICING[carrierId];
+    return p ? p.wifi : 0;
+  }
+
+  // ---------------- generic dropdown (accordion) component ----------------
+  // config: { id, stepNum, label, placeholder, valueText, subValueText, disabled, disabledNote, options: [{id, icon, title, desc, priceText, selected}] }
+  function renderDropdownHtml(config) {
+    const isOpen = openDropdown === config.id;
+    const isFilled = !!config.valueText;
+    const classes = ['dd-group'];
+    if (isOpen) classes.push('open');
+    if (isFilled) classes.push('filled');
+    if (config.disabled) classes.push('disabled');
+
+    const optionsHtml = config.disabled
+      ? `<div class="dd-panel-note">${config.disabledNote || '먼저 이전 항목을 선택해주세요'}</div>`
+      : config.options.map(opt => `
+          <div class="dd-option ${opt.selected ? 'selected' : ''}" data-dd-id="${config.id}" data-opt-id="${opt.id}">
+            ${opt.icon ? `<div class="dd-option-icon">${opt.icon}</div>` : ''}
+            <div class="dd-option-text">
+              <div class="dd-option-title">${opt.title}</div>
+              ${opt.desc ? `<div class="dd-option-desc">${opt.desc}</div>` : ''}
+            </div>
+            ${opt.priceText ? `<div class="dd-option-price">${opt.priceText}</div>` : ''}
+            <div class="dd-option-check">✓</div>
+          </div>
+        `).join('');
+
+    return `
+      <div class="${classes.join(' ')}" id="dd-${config.id}">
+        <div class="dd-header" data-dd-toggle="${config.id}">
+          <div class="dd-header-left">
+            <div class="dd-step-num"><span class="num-badge">${config.stepNum}</span>${config.label}</div>
+            <div class="dd-title-row">
+              ${isFilled
+                ? `<span class="dd-value">${config.valueText}</span>${config.subValueText ? `<span class="dd-subvalue">${config.subValueText}</span>` : ''}`
+                : `<span class="dd-placeholder">${config.placeholder}</span>`}
+            </div>
+          </div>
+          <div class="dd-chevron">▾</div>
+        </div>
+        <div class="dd-panel">
+          <div class="dd-panel-inner">${optionsHtml}</div>
+        </div>
+      </div>
+    `;
+  }
+
+  function bindDropdowns(onSelect) {
+    flowContent.querySelectorAll('[data-dd-toggle]').forEach(header => {
+      header.addEventListener('click', () => {
+        const id = header.getAttribute('data-dd-toggle');
+        const group = document.getElementById('dd-' + id);
+        if (group && group.classList.contains('disabled')) return;
+        openDropdown = (openDropdown === id) ? null : id;
+        renderCurrentStage();
+      });
+    });
+    flowContent.querySelectorAll('[data-opt-id]').forEach(opt => {
+      opt.addEventListener('click', () => {
+        const ddId = opt.getAttribute('data-dd-id');
+        const optId = opt.getAttribute('data-opt-id');
+        openDropdown = null;
+        onSelect(ddId, optId);
+      });
+    });
+  }
+
+  function renderCurrentStage() {
+    render();
+  }
+
+  // After picking an option for ddId, auto-open the next not-yet-selected dropdown in the given order.
+  // If everything in the order is filled, leaves openDropdown closed (so the summary/price area shows instead).
+  function moveToNextDropdown(order, justSelectedId) {
+    const startIdx = order.indexOf(justSelectedId) + 1;
+    for (let i = startIdx; i < order.length; i++) {
+      const key = order[i];
+      if (!selection[key]) {
+        openDropdown = key;
+        return;
+      }
+    }
+    openDropdown = null;
+  }
+
+  // Scrolls to the dropdown that just opened (next step), or to the summary area if everything is filled.
+  function scrollToOpenOrSummary() {
+    if (openDropdown) {
+      const el = document.getElementById('dd-' + openDropdown);
+      if (el) { el.scrollIntoView({ behavior: 'smooth', block: 'center' }); return; }
+    }
+    const summaryEl = document.getElementById('configSummaryArea');
+    if (summaryEl) summaryEl.scrollIntoView({ behavior: 'smooth', block: 'end' });
   }
 
   function renderSummaryPanel(showNextButton, nextLabel) {
     const price = calcPrice();
     if (!price) return '';
     const p = PRICING[selection.carrierId];
+    const installFee = selection.productType === 'internetTv' ? p.installFeeTv : p.installFeeOnly;
+    const meta = carrierMeta(selection.carrierId);
+    const extraTvOptionsMetaForSummary = meta ? (meta.extraTvOptions || meta.tvOptions) : [];
+    const extraTvRowsForSummary = (selection.extraTvOptions || []).filter(Boolean).map(optId => {
+      const optMeta = extraTvOptionsMetaForSummary.find(o => o.id === optId);
+      const unitPrice = (p.extraTv && p.extraTv[optId] && p.extraTv[optId].price) || 0;
+      return `<div class="summary-row"><span>추가 TV · ${optMeta ? optMeta.label : optId} (대당)</span><span class="v">+₩${won(unitPrice)}</span></div>`;
+    }).join('');
     let html = `
       <div class="summary-panel">
         <div class="s-title">예상 월 요금</div>
-        <div class="summary-row"><span>기본 상품 요금</span><span class="v">₩${won(price.base)}</span></div>
+        <div class="summary-row"><span>기본 상품 요금</span><span class="v">₩${won(price.base - (price.extraTvCost || 0))}</span></div>
+        ${extraTvRowsForSummary}
         ${selection.wifi ? `<div class="summary-row"><span>와이파이</span><span class="v">${price.wifiCost > 0 ? '+₩' + won(price.wifiCost) : '0원'}</span></div>` : ''}
         ${selection.phone ? `<div class="summary-row"><span>전화</span><span class="v">${price.phoneCost > 0 ? '+₩' + won(price.phoneCost) : '0원'}</span></div>` : ''}
         <div class="summary-divider"></div>
@@ -753,13 +1553,15 @@
           <div class="summary-total"><span class="label">월 요금</span><span class="amount">₩${won(price.total)}<span class="unit">/월</span></span></div>
           <div class="summary-mobile-combo"><span class="label">모바일 결합 시</span><span class="amount">₩${won(price.mobileComboPrice)}<span class="unit">/월</span></span></div>
         </div>
+        <div class="contract-note">3년 약정 · 설치비 ₩${won(installFee)} (최초 1회, 주말·야간 설치는 할증 요금 있어요)</div>
         <div class="combo-box">
           <div class="combo-note">ⓘ 결합요금은 개통 후 본사를 통해 결합 신청 시 적용돼요. 결합 가능 여부는 상담을 통해 다시 확인해드려요.</div>
+          ${selection.carrierId === 'carrier-lghello' ? '<div class="combo-note">ⓘ LG헬로비전은 동등결합으로 LG·KT·SK 모바일 모두 가능해요. LG·KT는 1회선부터, SK는 2회선부터 결합할 수 있어요.</div>' : ''}
         </div>
       </div>
       <div class="gift-inline-panel">
         <div class="gift-inline-title">🎁 이 상품 가입 시 사은품</div>
-        <div class="gift-item"><span class="gi-mark">✓</span><span>가입 사은품 현금 ${won(price.gift)}원</span></div>
+        <div class="gift-item"><span class="gi-mark">✓</span><span>가입 사은품 ${won(price.gift)}원</span></div>
         ${p.commonGifts.map(g => `<div class="gift-item"><span class="gi-mark">✓</span><span>${g}</span></div>`).join('')}
       </div>
     `;
@@ -770,59 +1572,40 @@
   }
 
   // ---------------- stage renderers ----------------
-  function renderCategoryStage() {
-    const node = currentCategoryNode();
+  const LIMITED_AREA_CARRIERS = ['carrier-skpop', 'carrier-lghello'];
+  function renderCarrierStage() {
     renderBreadcrumb();
-
-    if (node.isCarrierStep) {
-      // show carrier grid
-      const carrierHtml = CARRIERS.map(c => `
-        <div class="carrier-card" data-id="${c.id}">
-          <div class="carrier-logo">${c.logo}</div>
-          <div class="carrier-name">${c.name}</div>
-          <div class="carrier-desc">기가인터넷 · 인터넷+TV</div>
-        </div>
-      `).join('');
-      flowContent.innerHTML = `
-        <div class="step-title-block">
-          <div class="step-eyebrow">${node.eyebrow || ''}</div>
-          <h2>희망 통신사를 선택해주세요</h2>
-          <p>${node.title} 설치 가능한 통신사예요. 비교 후 선택해주세요.</p>
-        </div>
-        <div class="carrier-grid">${carrierHtml}</div>
-      `;
-      flowContent.querySelectorAll('.carrier-card').forEach(card => {
-        card.addEventListener('click', () => {
-          selection.carrierId = card.getAttribute('data-id');
-          flowStage = 'productType';
-          render();
-          viewFlow.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        });
-      });
-      return;
-    }
-
-    // branch with sub-categories
-    const optionsHtml = node.children.map(child => `
-      <div class="option-card" data-id="${child.id}">
-        <div class="option-icon">${child.icon}</div>
-        <div class="option-body">
-          <div class="o-title">${child.title}</div>
-          <div class="o-desc">${child.desc}</div>
-        </div>
+    const carrierHtml = CARRIERS.map(c => `
+      <div class="carrier-card" data-id="${c.id}">
+        <div class="carrier-name">${c.name}</div>
+        ${LIMITED_AREA_CARRIERS.includes(c.id) ? `
+          <div class="carrier-area-note">일부 지역만 설치 가능</div>
+          <button class="carrier-area-check-btn" data-area-check="${c.id}">📍 가능지역 확인</button>
+        ` : ''}
       </div>
     `).join('');
     flowContent.innerHTML = `
-      <div class="step-title-block">
-        <div class="step-eyebrow">${node.eyebrow || ''}</div>
-        <h2>${node.title}</h2>
-        <p>${node.desc}</p>
+      <div class="stage-card">
+        <div class="step-title-block">
+          <h2>희망 통신사를 선택해주세요</h2>
+        </div>
+        <div class="carrier-grid">${carrierHtml}</div>
       </div>
-      <div class="option-grid">${optionsHtml}</div>
     `;
-    flowContent.querySelectorAll('.option-card').forEach(card => {
+    flowContent.querySelectorAll('[data-area-check]').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const cid = btn.getAttribute('data-area-check');
+        const c = carrierById(cid);
+        areaModalCarrierName.textContent = c.name;
+        areaModalBody.innerHTML = renderAreaModalBody(c.id, c.name);
+        areaModalOverlay.style.display = 'flex';
+      });
+    });
+    flowContent.querySelectorAll('.carrier-card').forEach(card => {
       card.addEventListener('click', () => {
-        flowPath.push(card.getAttribute('data-id'));
+        selection.carrierId = card.getAttribute('data-id');
+        flowStage = 'productType';
         render();
         viewFlow.scrollIntoView({ behavior: 'smooth', block: 'start' });
       });
@@ -833,22 +1616,34 @@
     renderBreadcrumb();
     const carrier = carrierById(selection.carrierId);
     const options = [
-      { id: 'internetOnly', icon: '📶', title: '인터넷 단독', desc: '인터넷 회선만 설치' },
-      { id: 'internetTv', icon: '📺', title: '인터넷 + TV', desc: '인터넷과 IPTV를 함께 설치' }
+      { id: 'internetOnly', icons: ['💻', 'wifi'], title: '인터넷 단독', desc: '인터넷 회선만 설치' },
+      { id: 'internetTv', icons: ['💻', '📺', 'wifi'], title: '인터넷 + TV', desc: '인터넷과 IPTV를 함께 설치' }
     ];
+    const wifiSvgHtml = `
+      <svg class="wifi-icon" viewBox="0 0 24 24" width="26" height="26" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 18.5a1.7 1.7 0 1 0 0 3.4 1.7 1.7 0 0 0 0-3.4z" fill="#E0392B"/>
+        <path d="M8.3 15.8a5.2 5.2 0 0 1 7.4 0 1 1 0 0 1-1.4 1.4 3.2 3.2 0 0 0-4.6 0 1 1 0 0 1-1.4-1.4z" fill="#E0392B"/>
+        <path d="M4.7 12.2a10.3 10.3 0 0 1 14.6 0 1 1 0 0 1-1.4 1.4 8.3 8.3 0 0 0-11.8 0 1 1 0 0 1-1.4-1.4z" fill="#E0392B"/>
+        <path d="M1.4 8.6a15 15 0 0 1 21.2 0 1 1 0 0 1-1.4 1.4 13 13 0 0 0-18.4 0 1 1 0 0 1-1.4-1.4z" fill="#E0392B"/>
+      </svg>
+    `;
+    const renderIcon = (ic) => ic === 'wifi' ? wifiSvgHtml : ic;
     const optionsHtml = options.map(o => `
       <div class="option-card" data-id="${o.id}">
-        <div class="option-icon">${o.icon}</div>
+        <div class="option-icon-row">
+          ${o.icons.map(ic => `<div class="option-icon">${renderIcon(ic)}</div>`).join('')}
+        </div>
         <div class="option-body"><div class="o-title">${o.title}</div><div class="o-desc">${o.desc}</div></div>
       </div>
     `).join('');
     flowContent.innerHTML = `
-      <div class="step-title-block">
-        <div class="step-eyebrow">${carrier.name} 상품 선택</div>
-        <h2>상품 유형을 선택해주세요</h2>
-        <p>1번 인터넷 단독, 2번 인터넷+TV 중에서 골라주세요.</p>
+      <div class="stage-card">
+        <div class="step-title-block carrier-emphasis">
+          <div class="step-eyebrow">${carrier.name}</div>
+          <h2>상품 유형을 선택해주세요</h2>
+        </div>
+        <div class="option-grid">${optionsHtml}</div>
       </div>
-      <div class="option-grid">${optionsHtml}</div>
     `;
     flowContent.querySelectorAll('.option-card').forEach(card => {
       card.addEventListener('click', () => {
@@ -865,60 +1660,72 @@
     const carrier = carrierById(selection.carrierId);
     const meta = carrierMeta(selection.carrierId);
     const p = PRICING[selection.carrierId];
+    if (isWifiFreeForSelection(selection.carrierId, selection.speed) && !selection.wifi) {
+      selection.wifi = 'yes';
+    }
 
-    const speedHtml = meta.speeds.map(sp => `
-      <div class="pill-card ${selection.speed === sp ? 'selected' : ''}" data-group="speed" data-id="${sp}">
-        <div class="p-title">${SPEED_LABELS[sp]}</div>
-        <div class="p-price">₩${won(p.internetOnly[sp].price)}/월</div>
-      </div>
-    `).join('');
+    const speedDd = {
+      id: 'speed', stepNum: 1, label: '인터넷', placeholder: '인터넷 속도를 선택해주세요',
+      valueText: selection.speed ? SPEED_LABELS[selection.speed] : null,
+      subValueText: selection.speed ? `₩${won(p.internetOnly[selection.speed].price)}/월` : null,
+      options: meta.speeds.map(sp => ({
+        id: String(sp), title: SPEED_LABELS[sp], priceText: `₩${won(p.internetOnly[sp].price)}/월`, selected: selection.speed === sp
+      }))
+    };
+    const isWifiAlwaysFree = isWifiFreeForSelection(selection.carrierId, selection.speed);
+    const wifiDd = isWifiAlwaysFree ? {
+      id: 'wifi', stepNum: 2, label: '와이파이', placeholder: '와이파이 무료 제공',
+      valueText: '와이파이 무료',
+      options: [{ id: 'yes', title: '와이파이 무료', priceText: '0원', selected: true }]
+    } : {
+      id: 'wifi', stepNum: 2, label: '와이파이', placeholder: '와이파이 사용 여부를 선택해주세요',
+      valueText: selection.wifi ? WIFI_OPTIONS.find(w => w.id === selection.wifi).label : null,
+      options: WIFI_OPTIONS.map(w => {
+        const wifiPrice = getWifiCost(selection.carrierId, selection.speed, false);
+        return { id: w.id, title: w.label, priceText: w.id === 'yes' ? (wifiPrice > 0 ? `+₩${won(wifiPrice)}/월` : '0원') : '0원', selected: selection.wifi === w.id };
+      })
+    };
+    const priceFor = (id) => id === 'general' ? p.phoneGeneral : id === 'internet' ? p.phoneInternet : id === 'fax' ? p.phoneFax : 0;
+    const phoneOptionsForCarrier = getPhoneOptions(selection.carrierId);
+    const phoneDd = {
+      id: 'phone', stepNum: 3, label: '전화', placeholder: '전화 상품을 선택해주세요',
+      valueText: selection.phone ? phoneOptionsForCarrier.find(ph => ph.id === selection.phone).label : null,
+      options: phoneOptionsForCarrier.map(ph => ({
+        id: ph.id, title: ph.label, priceText: priceFor(ph.id) > 0 ? `+₩${won(priceFor(ph.id))}/월` : '0원', selected: selection.phone === ph.id
+      }))
+    };
 
-    const wifiHtml = WIFI_OPTIONS.map(w => `
-      <div class="pill-card ${selection.wifi === w.id ? 'selected' : ''}" data-group="wifi" data-id="${w.id}">
-        <div class="p-title">${w.label}</div>
-        <div class="p-price">${w.id === 'yes' ? '+₩' + won(p.wifi) + '/월' : '0원'}</div>
-      </div>
-    `).join('');
-
-    const priceFor = (id) => id === 'general' ? p.phoneGeneral : id === 'internet' ? p.phoneInternet : 0;
-    const phoneHtml = PHONE_OPTIONS.map(ph => `
-      <div class="pill-card ${selection.phone === ph.id ? 'selected' : ''}" data-group="phone" data-id="${ph.id}">
-        <div class="p-title">${ph.label}</div>
-        <div class="p-price">${priceFor(ph.id) > 0 ? '+₩' + won(priceFor(ph.id)) + '/월' : '0원'}</div>
-      </div>
-    `).join('');
-
-    const allSelected = selection.speed && selection.wifi && selection.phone;
+    const canShowPrice = !!selection.speed;
+    const allSelected = !!selection.speed;
 
     flowContent.innerHTML = `
-      <div class="step-title-block">
-        <div class="step-eyebrow">${carrier.name} · 인터넷 단독</div>
-        <h2>옵션을 선택해주세요</h2>
-        <p>속도, 와이파이, 전화를 모두 선택하면 요금과 사은품이 바로 표시돼요.</p>
-      </div>
-
-      <div class="config-group">
-        <div class="config-group-label">속도</div>
-        <div class="pill-row">${speedHtml}</div>
-      </div>
-      <div class="config-group">
-        <div class="config-group-label">와이파이</div>
-        <div class="pill-row">${wifiHtml}</div>
-      </div>
-      <div class="config-group">
-        <div class="config-group-label">전화</div>
-        <div class="pill-row">${phoneHtml}</div>
-      </div>
-
-      <div id="configSummaryArea">${allSelected ? renderSummaryPanel(true, '신청 진행하기') : `
-        <div class="summary-panel summary-empty">
-          <div class="s-title">예상 월 요금</div>
-          <div class="summary-empty-note">속도, 와이파이, 전화를 모두 선택하면 요금과 사은품이 표시돼요.</div>
+      <div class="stage-card">
+        <div class="step-title-block carrier-emphasis">
+          <div class="step-eyebrow">${carrier.name}</div>
+          <h2>옵션을 선택해주세요</h2>
         </div>
-      `}</div>
+
+        ${renderDropdownHtml(speedDd)}
+        ${renderDropdownHtml(wifiDd)}
+        ${phoneOptionsForCarrier.length ? renderDropdownHtml(phoneDd) : ''}
+
+        <div id="configSummaryArea">${canShowPrice ? renderSummaryPanel(allSelected, '신청 진행하기') : `
+          <div class="summary-panel summary-empty">
+            <div class="s-title">예상 월 요금</div>
+            <div class="summary-empty-note">속도를 선택하면 요금이 표시돼요.</div>
+          </div>
+        `}</div>
+      </div>
     `;
 
-    bindConfigPills();
+    bindDropdowns((ddId, optId) => {
+      if (ddId === 'speed') selection.speed = parseInt(optId, 10);
+      else selection[ddId] = optId;
+      moveToNextDropdown(['speed', 'wifi', 'phone'], ddId);
+      render();
+      scrollToOpenOrSummary();
+    });
+    bindFlowNextButton();
   }
 
   function renderConfigTvStage() {
@@ -926,91 +1733,159 @@
     const carrier = carrierById(selection.carrierId);
     const meta = carrierMeta(selection.carrierId);
     const p = PRICING[selection.carrierId];
+    if (isWifiFreeForSelection(selection.carrierId, selection.speed) && !selection.wifi) {
+      selection.wifi = 'yes';
+    }
+    if (!selection.tvCount) selection.tvCount = 1;
+    if (!Array.isArray(selection.extraTvOptions)) selection.extraTvOptions = [];
 
-    const speedHtml = meta.speeds.map(sp => `
-      <div class="pill-card ${selection.speed === sp ? 'selected' : ''}" data-group="speed" data-id="${sp}">
-        <div class="p-title">${SPEED_LABELS[sp]}</div>
-      </div>
-    `).join('');
+    const speedDd = {
+      id: 'speed', stepNum: 1, label: '인터넷', placeholder: '인터넷 속도를 선택해주세요',
+      valueText: selection.speed ? SPEED_LABELS[selection.speed] : null,
+      options: meta.speeds.map(sp => ({ id: String(sp), title: SPEED_LABELS[sp], selected: selection.speed === sp }))
+    };
 
-    // TV option pills only resolvable once a speed is chosen (base-extra/delta resolve relative to base option's price at that speed)
-    let tvHtml = `<div class="pill-row-note">속도를 먼저 선택해주세요</div>`;
-    if (selection.speed) {
-      tvHtml = meta.tvOptions.map(opt => {
+    const TV_COUNT_OPTIONS = [1, 2, 3, 4];
+    const tvCountDd = {
+      id: 'tvCount', stepNum: 2, label: 'TV 대수', placeholder: 'TV 대수를 선택해주세요',
+      disabled: !selection.speed,
+      disabledNote: '인터넷을 먼저 선택해주세요',
+      valueText: `${selection.tvCount}대`,
+      options: selection.speed ? TV_COUNT_OPTIONS.map(n => ({
+        id: String(n), title: `${n}대`, selected: selection.tvCount === n
+      })) : []
+    };
+
+    const tvDd = {
+      id: 'tvOption', stepNum: 3, label: 'TV', placeholder: 'TV상품을 선택해주세요',
+      disabled: !selection.speed,
+      disabledNote: '인터넷을 먼저 선택해주세요',
+      valueText: selection.tvOption ? meta.tvOptions.find(o => o.id === selection.tvOption).label : null,
+      subValueText: (selection.speed && selection.tvOption) ? `₩${won(resolveTvOption(selection.carrierId, selection.speed, selection.tvOption).price)}/월` : null,
+      options: selection.speed ? meta.tvOptions.map(opt => {
         const resolved = resolveTvOption(selection.carrierId, selection.speed, opt.id);
-        return `
-          <div class="pill-card ${selection.tvOption === opt.id ? 'selected' : ''}" data-group="tvOption" data-id="${opt.id}">
-            <div class="p-title">${opt.label}</div>
-            <div class="p-price">₩${won(resolved.price)}/월</div>
-          </div>
-        `;
-      }).join('');
+        const isPromaxPromo = selection.carrierId === 'carrier-lghello' && opt.id === 'promax' && (selection.speed === 500 || selection.speed === 1000);
+        const descParts = [];
+        const channelCount = p.channelCounts && p.channelCounts[opt.id];
+        if (channelCount) descParts.push(channelCount);
+        if (opt.signalType) descParts.push(`${opt.signalType} 방식`);
+        if (isPromaxPromo) descParts.push('프로모션 할인 -1,100원 적용');
+        return { id: opt.id, title: opt.label, desc: descParts.length ? descParts.join(' · ') : null, priceText: `₩${won(resolved.price)}/월`, selected: selection.tvOption === opt.id };
+      }) : []
+    };
+
+    // 추가TV: 메인 TV 선택이 끝나야 노출되고, TV 대수 - 1 만큼 드롭다운이 생김
+    const extraTvCount = Math.max(0, (selection.tvCount || 1) - 1);
+    const extraTvOptionsMetaAll = meta.extraTvOptions || meta.tvOptions;
+    const mainTvTier = selection.tvOption ? (meta.tvOptions.find(o => o.id === selection.tvOption) || {}).tier || 0 : 0;
+    // 메인 TV보다 등급이 낮은 추가TV 상품은 선택할 수 없도록 목록에서 제외
+    const extraTvOptionsMeta = extraTvOptionsMetaAll.filter(opt => (opt.tier || 0) >= mainTvTier);
+    const extraTvDds = [];
+    for (let i = 0; i < extraTvCount; i++) {
+      const fieldId = `extraTv${i}`;
+      const currentVal = selection.extraTvOptions[i];
+      extraTvDds.push({
+        id: fieldId, stepNum: 4 + i, label: `추가 TV ${i + 1}`, placeholder: '추가 TV 상품을 선택해주세요',
+        disabled: !selection.tvOption,
+        disabledNote: '메인 TV 상품을 먼저 선택해주세요',
+        valueText: (currentVal && extraTvOptionsMeta.find(o => o.id === currentVal)) ? extraTvOptionsMeta.find(o => o.id === currentVal).label : null,
+        subValueText: (selection.tvOption && currentVal && extraTvOptionsMeta.find(o => o.id === currentVal)) ? `₩${won((p.extraTv[currentVal] || {}).price || 0)}/월` : null,
+        options: selection.tvOption ? extraTvOptionsMeta.map(opt => {
+          const data = p.extraTv[opt.id] || { price: 0 };
+          const descParts = [];
+          const extraChannelCount = (p.extraChannelCounts && p.extraChannelCounts[opt.id]) || (p.channelCounts && p.channelCounts[opt.id]);
+          if (extraChannelCount) descParts.push(extraChannelCount);
+          if (opt.signalType) descParts.push(`${opt.signalType} 방식`);
+          if (opt.promo) descParts.push(opt.promo);
+          return { id: opt.id, title: opt.label, desc: descParts.length ? descParts.join(' · ') : null, priceText: `+₩${won(data.price)}/월`, selected: currentVal === opt.id };
+        }) : []
+      });
     }
 
-    const wifiHtml = WIFI_OPTIONS.map(w => `
-      <div class="pill-card ${selection.wifi === w.id ? 'selected' : ''}" data-group="wifi" data-id="${w.id}">
-        <div class="p-title">${w.label}</div>
-        <div class="p-price">${w.id === 'yes' ? '+₩' + won(p.wifi) + '/월' : '0원'}</div>
-      </div>
-    `).join('');
+    const wifiStepNum = 4 + extraTvCount;
+    const isWifiAlwaysFreeTv = isWifiFreeForSelection(selection.carrierId, selection.speed);
+    const wifiDd = isWifiAlwaysFreeTv ? {
+      id: 'wifi', stepNum: wifiStepNum, label: '와이파이', placeholder: '와이파이 무료 제공',
+      valueText: '와이파이 무료',
+      options: [{ id: 'yes', title: '와이파이 무료', priceText: '0원', selected: true }]
+    } : {
+      id: 'wifi', stepNum: wifiStepNum, label: '와이파이', placeholder: '와이파이 사용 여부를 선택해주세요',
+      valueText: selection.wifi ? WIFI_OPTIONS.find(w => w.id === selection.wifi).label : null,
+      options: WIFI_OPTIONS.map(w => {
+        const wifiPrice = getWifiCost(selection.carrierId, selection.speed, false);
+        return { id: w.id, title: w.label, priceText: w.id === 'yes' ? (wifiPrice > 0 ? `+₩${won(wifiPrice)}/월` : '0원') : '0원', selected: selection.wifi === w.id };
+      })
+    };
+    const priceFor = (id) => id === 'general' ? p.phoneGeneral : id === 'internet' ? p.phoneInternet : id === 'fax' ? p.phoneFax : 0;
+    const phoneOptionsForCarrier = getPhoneOptions(selection.carrierId);
+    const phoneDd = {
+      id: 'phone', stepNum: wifiStepNum + 1, label: '전화', placeholder: '전화 상품을 선택해주세요',
+      valueText: selection.phone ? phoneOptionsForCarrier.find(ph => ph.id === selection.phone).label : null,
+      options: phoneOptionsForCarrier.map(ph => ({
+        id: ph.id, title: ph.label, priceText: priceFor(ph.id) > 0 ? `+₩${won(priceFor(ph.id))}/월` : '0원', selected: selection.phone === ph.id
+      }))
+    };
 
-    const priceFor = (id) => id === 'general' ? p.phoneGeneral : id === 'internet' ? p.phoneInternet : 0;
-    const phoneHtml = PHONE_OPTIONS.map(ph => `
-      <div class="pill-card ${selection.phone === ph.id ? 'selected' : ''}" data-group="phone" data-id="${ph.id}">
-        <div class="p-title">${ph.label}</div>
-        <div class="p-price">${priceFor(ph.id) > 0 ? '+₩' + won(priceFor(ph.id)) + '/월' : '0원'}</div>
-      </div>
-    `).join('');
-
-    const allSelected = selection.speed && selection.tvOption && selection.wifi && selection.phone;
+    const allExtraTvFilled = selection.extraTvOptions.slice(0, extraTvCount).every(v => !!v) && selection.extraTvOptions.slice(0, extraTvCount).length === extraTvCount;
+    const canShowPrice = !!(selection.speed && selection.tvOption) && allExtraTvFilled;
+    const allSelected = canShowPrice;
 
     flowContent.innerHTML = `
-      <div class="step-title-block">
-        <div class="step-eyebrow">${carrier.name} · 인터넷+TV</div>
-        <h2>옵션을 선택해주세요</h2>
-        <p>속도, TV 상품, 와이파이, 전화를 모두 선택하면 요금과 사은품이 바로 표시돼요.</p>
-      </div>
-
-      <div class="config-group">
-        <div class="config-group-label">속도</div>
-        <div class="pill-row">${speedHtml}</div>
-      </div>
-      <div class="config-group">
-        <div class="config-group-label">TV 상품</div>
-        <div class="pill-row">${tvHtml}</div>
-      </div>
-      <div class="config-group">
-        <div class="config-group-label">와이파이</div>
-        <div class="pill-row">${wifiHtml}</div>
-      </div>
-      <div class="config-group">
-        <div class="config-group-label">전화</div>
-        <div class="pill-row">${phoneHtml}</div>
-      </div>
-
-      <div id="configSummaryArea">${allSelected ? renderSummaryPanel(true, '신청 진행하기') : `
-        <div class="summary-panel summary-empty">
-          <div class="s-title">예상 월 요금</div>
-          <div class="summary-empty-note">속도, TV 상품, 와이파이, 전화를 모두 선택하면 요금과 사은품이 표시돼요.</div>
+      <div class="stage-card">
+        <div class="step-title-block carrier-emphasis">
+          <div class="step-eyebrow">${carrier.name}</div>
+          <h2>옵션을 선택해주세요</h2>
         </div>
-      `}</div>
+
+        ${renderDropdownHtml(speedDd)}
+        ${renderDropdownHtml(tvCountDd)}
+        ${renderDropdownHtml(tvDd)}
+        ${extraTvDds.map(dd => renderDropdownHtml(dd)).join('')}
+        ${renderDropdownHtml(wifiDd)}
+        ${phoneOptionsForCarrier.length ? renderDropdownHtml(phoneDd) : ''}
+
+        <div id="configSummaryArea">${canShowPrice ? renderSummaryPanel(allSelected, '신청 진행하기') : `
+          <div class="summary-panel summary-empty">
+            <div class="s-title">예상 월 요금</div>
+            <div class="summary-empty-note">속도와 TV 상품을 선택하면 요금이 표시돼요.</div>
+          </div>
+        `}</div>
+      </div>
     `;
 
-    bindConfigPills();
+    const dropdownOrder = ['speed', 'tvCount', 'tvOption', ...extraTvDds.map(dd => dd.id), 'wifi', 'phone'];
+    bindDropdowns((ddId, optId) => {
+      if (ddId === 'speed') {
+        selection.speed = parseInt(optId, 10);
+        selection.tvOption = undefined;
+        selection.extraTvOptions = [];
+      } else if (ddId === 'tvCount') {
+        selection.tvCount = parseInt(optId, 10);
+        // 대수가 줄어들면 넘치는 추가TV 선택값은 제거
+        selection.extraTvOptions = selection.extraTvOptions.slice(0, Math.max(0, selection.tvCount - 1));
+      } else if (ddId === 'tvOption') {
+        selection.tvOption = optId;
+        // 메인TV가 바뀌면, 새 등급보다 낮은 추가TV 선택값은 더 이상 유효하지 않으니 초기화
+        const newTier = (meta.tvOptions.find(o => o.id === optId) || {}).tier || 0;
+        selection.extraTvOptions = selection.extraTvOptions.map(v => {
+          if (!v) return v;
+          const optMeta = extraTvOptionsMetaAll.find(o => o.id === v);
+          return (optMeta && (optMeta.tier || 0) >= newTier) ? v : undefined;
+        });
+      } else if (ddId.startsWith('extraTv')) {
+        const idx = parseInt(ddId.replace('extraTv', ''), 10);
+        selection.extraTvOptions[idx] = optId;
+      } else {
+        selection[ddId] = optId;
+      }
+      moveToNextDropdown(dropdownOrder, ddId);
+      render();
+      scrollToOpenOrSummary();
+    });
+    bindFlowNextButton();
   }
 
-  function bindConfigPills() {
-    flowContent.querySelectorAll('.pill-card').forEach(card => {
-      card.addEventListener('click', () => {
-        const group = card.getAttribute('data-group');
-        const id = card.getAttribute('data-id');
-        selection[group] = (group === 'speed') ? parseInt(id, 10) : id;
-        if (group === 'speed') selection.tvOption = undefined; // re-pick TV option since price resolution depends on speed
-        render();
-        const summaryEl = document.getElementById('configSummaryArea');
-        if (summaryEl) summaryEl.scrollIntoView({ behavior: 'smooth', block: 'end' });
-      });
-    });
+  function bindFlowNextButton() {
     const nextBtn = document.getElementById('btnFlowNext');
     if (nextBtn) {
       nextBtn.addEventListener('click', () => {
@@ -1024,36 +1899,182 @@
   function renderGiftStage() {
     renderBreadcrumb();
     const carrier = carrierById(selection.carrierId);
+    const meta = carrierMeta(selection.carrierId);
     const p = PRICING[selection.carrierId];
     const price = calcPrice();
+
+    const sidoOptions = Object.keys(ADDRESS_DATA);
+    const sigunguOptions = selection.sido ? ADDRESS_DATA[selection.sido] : [];
+
+    const extraTvOptionsMeta = meta.extraTvOptions || meta.tvOptions;
+    const productParts = selection.productType === 'internetTv'
+      ? ['인터넷+TV', SPEED_LABELS[selection.speed], meta.tvOptions.find(o => o.id === selection.tvOption).label]
+      : ['인터넷 단독', SPEED_LABELS[selection.speed]];
+
+    if (selection.productType === 'internetTv' && selection.tvCount > 1) {
+      productParts.push(`TV ${selection.tvCount}대`);
+      (selection.extraTvOptions || []).forEach(optId => {
+        if (!optId) return;
+        const optMeta = extraTvOptionsMeta.find(o => o.id === optId);
+        if (optMeta) productParts.push(`추가:${optMeta.label}`);
+      });
+    }
+
+    if (selection.wifi === 'yes') productParts.push('와이파이');
+    if (selection.phone === 'general') productParts.push('일반전화');
+    else if (selection.phone === 'internet') productParts.push('인터넷전화');
+    else if (selection.phone === 'fax') productParts.push('팩스');
+
+    const productLabelHtml = productParts.map(part => `<span class="gs-tag">${part}</span>`).join('');
+    const installFee = selection.productType === 'internetTv' ? p.installFeeTv : p.installFeeOnly;
+
+    flowContent.innerHTML = `
+      <div class="gift-summary-card">
+        <div class="gs-row"><span class="gs-k">통신사</span><span class="gs-v">${carrier.name}</span></div>
+        <div class="gs-row gs-row-wrap"><span class="gs-k">선택 상품</span><span class="gs-v gs-tag-list">${productLabelHtml}</span></div>
+        <div class="gs-row"><span class="gs-k">월 요금</span><span class="gs-v gs-price">₩${won(price.total)}<span class="gs-unit">/월</span></span></div>
+        <div class="gs-row"><span class="gs-k">결합 시 요금</span><span class="gs-v gs-combo">₩${won(price.mobileComboPrice)}<span class="gs-unit">/월</span></span></div>
+        <div class="contract-note">3년 약정 · 설치비 ₩${won(installFee)} (최초 1회, 주말·야간 설치는 할증 요금 있어요)</div>
+        <div class="gs-divider"></div>
+        <div class="gs-gift-block">
+          <div class="gs-gift-label">🎁 가입 사은품</div>
+          <div class="gs-gift-amount">${won(price.gift)}<span class="gs-gift-unit">원</span></div>
+          ${p.commonGifts.length ? `<div class="gs-gift-extra">${p.commonGifts.join(' · ')}</div>` : ''}
+        </div>
+        <div class="gs-note">ⓘ 결합요금은 개통 후 본사를 통해 결합 신청 시 적용돼요.</div>
+        ${selection.carrierId === 'carrier-lghello' ? '<div class="gs-note">ⓘ LG헬로비전은 동등결합으로 LG·KT·SK 모바일 모두 가능해요. LG·KT는 1회선부터, SK는 2회선부터 결합할 수 있어요.</div>' : ''}
+      </div>
+
+      <div class="apply-panel">
+        <div class="apply-title">신청서를 작성해주세요</div>
+
+        <div class="field">
+          <label>이름<span class="req">*</span></label>
+          <input type="text" id="f-name" placeholder="홍길동" value="${selection.name || ''}">
+        </div>
+
+        <div class="field-group-label">주소 <span class="optional-tag">(선택)</span></div>
+        <div class="addr-dd-row">
+          <select id="f-sido" class="dd-select">
+            <option value="">시/도</option>
+            ${sidoOptions.map(s => `<option value="${s}" ${selection.sido === s ? 'selected' : ''}>${s}</option>`).join('')}
+          </select>
+          <select id="f-sigungu" class="dd-select" ${!selection.sido ? 'disabled' : ''}>
+            <option value="">시/군/구</option>
+            ${sigunguOptions.map(s => `<option value="${s}" ${selection.sigungu === s ? 'selected' : ''}>${s}</option>`).join('')}
+          </select>
+        </div>
+        <div class="field" style="margin-top:8px;">
+          <input type="text" id="f-dong" placeholder="동/읍/면, 상세주소 (예: 역삼동 123-4)" value="${selection.dong || ''}" ${!selection.sigungu ? 'disabled' : ''}>
+        </div>
+
+        <div class="field-group-label">건물 형식 <span class="optional-tag">(선택)</span></div>
+        <select id="f-building" class="dd-select dd-select-full">
+          <option value="">건물 형식을 선택해주세요</option>
+          ${BUILDING_TYPES.map(b => `<option value="${b.id}" ${selection.buildingType === b.id ? 'selected' : ''}>${b.label}</option>`).join('')}
+        </select>
+
+        <div class="field" style="margin-top:18px;">
+          <label>연락처<span class="req">*</span></label>
+          <input type="tel" id="f-phone-number" placeholder="010-0000-0000" value="${selection.phoneNumber || ''}">
+        </div>
+
+        <div class="field-group-label">기존 통신사 <span class="optional-tag">(선택)</span></div>
+        <select id="f-existing-carrier" class="dd-select dd-select-full">
+          <option value="">기존 통신사를 선택해주세요</option>
+          ${EXISTING_CARRIER_OPTIONS.map(c => `<option value="${c.id}" ${selection.existingCarrier === c.id ? 'selected' : ''}>${c.label}</option>`).join('')}
+        </select>
+
+        <div class="field-error" id="apply-error">이름과 연락처를 입력해주세요.</div>
+
+        <label class="privacy-consent">
+          <input type="checkbox" id="f-privacy-agree" ${selection.privacyAgree ? 'checked' : ''}>
+          <span>개인정보 수집·이용에 동의합니다. <button type="button" class="privacy-link" id="btnPrivacyView">(자세히 보기)</button></span>
+        </label>
+        <div class="field-error" id="privacy-error">개인정보 수집·이용에 동의해주세요.</div>
+
+        <button class="btn-primary-full" id="btnSubmitApply" style="margin-top:14px;">신청서 제출하기</button>
+      </div>
+    `;
+
+    document.getElementById('f-sido').addEventListener('change', (e) => {
+      selection.sido = e.target.value || undefined;
+      selection.sigungu = undefined;
+      render();
+    });
+    document.getElementById('f-sigungu').addEventListener('change', (e) => {
+      selection.sigungu = e.target.value || undefined;
+      render();
+    });
+    document.getElementById('f-dong').addEventListener('input', (e) => {
+      selection.dong = e.target.value || undefined;
+    });
+    document.getElementById('f-building').addEventListener('change', (e) => {
+      selection.buildingType = e.target.value || undefined;
+    });
+    document.getElementById('f-existing-carrier').addEventListener('change', (e) => {
+      selection.existingCarrier = e.target.value || undefined;
+    });
+
+    document.getElementById('f-privacy-agree').addEventListener('change', (e) => {
+      selection.privacyAgree = e.target.checked;
+    });
+    document.getElementById('btnPrivacyView').addEventListener('click', () => {
+      privacyModalOverlay.style.display = 'flex';
+    });
+
+    document.getElementById('btnSubmitApply').addEventListener('click', () => {
+      selection.name = document.getElementById('f-name').value.trim();
+      selection.phoneNumber = document.getElementById('f-phone-number').value.trim();
+      selection.dong = document.getElementById('f-dong').value.trim() || undefined;
+      selection.privacyAgree = document.getElementById('f-privacy-agree').checked;
+      const errEl = document.getElementById('apply-error');
+      const privacyErrEl = document.getElementById('privacy-error');
+      const valid = selection.name && selection.phoneNumber;
+      if (!valid) {
+        errEl.classList.add('show');
+      } else {
+        errEl.classList.remove('show');
+      }
+      if (!selection.privacyAgree) {
+        privacyErrEl.classList.add('show');
+      } else {
+        privacyErrEl.classList.remove('show');
+      }
+      if (!valid || !selection.privacyAgree) return;
+      flowStage = 'submitted';
+      render();
+      viewFlow.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  }
+
+  function renderSubmittedStage() {
+    renderBreadcrumb();
+    const carrier = carrierById(selection.carrierId);
     flowContent.innerHTML = `
       <div class="gift-panel">
-        <div class="gift-icon">🎁</div>
-        <h3>${carrier.name} 견적이 확인됐어요</h3>
-        <p>선택하신 상품 기준 월 요금과 사은품이에요.</p>
-        <div class="gift-list">
-          <div class="gift-item"><span class="gi-mark">✓</span><span>가입 사은품 현금 ${won(price.gift)}원</span></div>
-          ${p.commonGifts.map(g => `<div class="gift-item"><span class="gi-mark">✓</span><span>${g}</span></div>`).join('')}
-        </div>
-        <div class="final-amount">₩${won(price.total)} <span style="font-size:14px;color:var(--ink-dim);font-family:var(--sans);font-weight:400;">/월</span></div>
-        <div class="final-note">ⓘ 결합요금은 개통 후 본사를 통해 결합 신청 시 적용돼요.<br>여기까지가 견적 확인 단계예요. 다음 단계는 이어서 안내드릴게요.</div>
+        <div class="gift-icon">✓</div>
+        <h3>신청서가 접수됐어요</h3>
+        <p>${selection.name}님, ${carrier.name} 가입 신청이 정상적으로 제출됐어요. 입력하신 연락처로 상담드릴게요.</p>
+        <div class="final-note" style="margin-top:18px;">ⓘ 이 화면은 데모이며 실제 통신사 가입 접수와는 무관합니다.</div>
       </div>
     `;
   }
 
   // ---------------- router ----------------
   function render() {
-    if (flowStage === 'category') renderCategoryStage();
+    if (flowStage === 'carrier') renderCarrierStage();
     else if (flowStage === 'productType') renderProductTypeStage();
     else if (flowStage === 'configOnly') renderConfigOnlyStage();
     else if (flowStage === 'configTv') renderConfigTvStage();
     else if (flowStage === 'gift') renderGiftStage();
+    else if (flowStage === 'submitted') renderSubmittedStage();
   }
 
   function goToFlowRoot() {
-    flowPath = [];
     selection = {};
-    flowStage = 'category';
+    flowStage = 'carrier';
+    openDropdown = null;
     viewLanding.style.display = 'none';
     viewFlow.style.display = 'block';
     render();
@@ -1061,29 +2082,71 @@
   }
 
   function goBack() {
+    openDropdown = null;
+    if (flowStage === 'submitted') { flowStage = 'gift'; render(); window.scrollTo({top:0,behavior:'smooth'}); return; }
     if (flowStage === 'gift') {
       flowStage = selection.productType === 'internetOnly' ? 'configOnly' : 'configTv';
       render(); window.scrollTo({top:0,behavior:'smooth'}); return;
     }
     if (flowStage === 'configOnly' || flowStage === 'configTv') {
       selection.speed = undefined; selection.tvOption = undefined; selection.wifi = undefined; selection.phone = undefined;
+      selection.tvCount = undefined; selection.extraTvOptions = [];
       flowStage = 'productType'; render(); window.scrollTo({top:0,behavior:'smooth'}); return;
     }
-    if (flowStage === 'productType') { selection.productType = undefined; selection.carrierId = undefined; flowStage = 'category'; render(); window.scrollTo({top:0,behavior:'smooth'}); return; }
-    // category stage
-    if (flowPath.length === 0) {
-      viewFlow.style.display = 'none';
-      viewLanding.style.display = 'block';
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      return;
-    }
-    flowPath.pop();
-    render();
+    if (flowStage === 'productType') { selection.productType = undefined; selection.carrierId = undefined; flowStage = 'carrier'; render(); window.scrollTo({top:0,behavior:'smooth'}); return; }
+    // carrier stage (first step) -> back to landing
+    viewFlow.style.display = 'none';
+    viewLanding.style.display = 'block';
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   btnStartQuote.addEventListener('click', goToFlowRoot);
-  btnBack.addEventListener('click', goBack);
+
+  // ================= sticky consult bar =================
+  const stickyConsultBar = document.getElementById('stickyConsultBar');
+  const scbHandle = document.getElementById('scbHandle');
+  const scbName = document.getElementById('scbName');
+  const scbPhone = document.getElementById('scbPhone');
+  const scbSubmit = document.getElementById('scbSubmit');
+
+  scbHandle.addEventListener('click', () => {
+    stickyConsultBar.classList.toggle('open');
+  });
+
+  scbSubmit.addEventListener('click', () => {
+    const name = scbName.value.trim();
+    const phone = scbPhone.value.trim();
+    if (!name || !phone) {
+      alert('이름과 연락처를 입력해주세요.');
+      return;
+    }
+    alert(name + '님, 상담 요청이 접수됐어요. 입력하신 연락처로 곧 연락드릴게요.\n(이 화면은 데모이며 실제 접수와는 무관합니다)');
+    scbName.value = '';
+    scbPhone.value = '';
+    stickyConsultBar.classList.remove('open');
+  });
+
+  // ================= floating action buttons =================
+  const fabToTop = document.getElementById('fabToTop');
+  const fabKakao = document.getElementById('fabKakao');
+  const fabCall = document.getElementById('fabCall');
+  const fabBack = document.getElementById('fabBack');
+  const CALL_NUMBER = '1855-2823';
+
+  fabToTop.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+  fabKakao.addEventListener('click', () => {
+    alert('카카오 상담 연결 준비 중이에요. 카카오톡 채널 주소가 연결되면 바로 채팅으로 이동할 수 있어요.');
+  });
+  fabCall.addEventListener('click', () => {
+    window.location.href = 'tel:' + CALL_NUMBER;
+  });
+  fabBack.addEventListener('click', () => {
+    if (viewFlow.style.display === 'block') {
+      goBack();
+    }
+  });
 
   // ================= ADMIN MODE =================
   const ADMIN_PASSWORD = '1234';
@@ -1112,6 +2175,50 @@
   saveConfirmCloseBtn.addEventListener('click', closeSaveConfirmModal);
   saveConfirmModal.addEventListener('click', (e) => { if (e.target === saveConfirmModal) closeSaveConfirmModal(); });
 
+  const privacyModalOverlay = document.getElementById('privacyModalOverlay');
+  const privacyModalCloseBtn = document.getElementById('privacyModalCloseBtn');
+  function closePrivacyModal() { privacyModalOverlay.style.display = 'none'; }
+  privacyModalCloseBtn.addEventListener('click', closePrivacyModal);
+  privacyModalOverlay.addEventListener('click', (e) => { if (e.target === privacyModalOverlay) closePrivacyModal(); });
+
+  const areaModalOverlay = document.getElementById('areaModalOverlay');
+  const areaModalCarrierName = document.getElementById('areaModalCarrierName');
+  const areaModalBody = document.getElementById('areaModalBody');
+  const areaModalCloseBtn = document.getElementById('areaModalCloseBtn');
+  function closeAreaModal() { areaModalOverlay.style.display = 'none'; }
+  areaModalCloseBtn.addEventListener('click', closeAreaModal);
+  areaModalOverlay.addEventListener('click', (e) => { if (e.target === areaModalOverlay) closeAreaModal(); });
+
+  // LG헬로비전 설치 가능 권역 (지역 그룹별 정리)
+  const HELLO_AREA_DATA = [
+    { region: '수도권', areas: '서울특별시 양천구, 은평구 · 인천광역시 부평구, 계양구 · 부천시, 김포시, 의정부시, 양주시, 포천시, 동두천시, 연천군' },
+    { region: '충남', areas: '서산시, 당진시, 홍성군, 예산군, 태안군, 청양군' },
+    { region: '대구/경북', areas: '대구광역시 수성구, 동구 · 안동시, 영주시, 문경시, 의성군, 예천군, 봉화군, 청송군, 영양군, 경주시, 경산시, 영천시, 청도군' },
+    { region: '부산/경남', areas: '부산광역시 영도구, 동구, 중구, 부산진구, 금정구, 해운대구, 기장군 · 창원시 의창구, 성산구, 진해구, 마산회원구, 마산합포구, 함안군, 의령군, 거제시, 통영시, 고성군, 김해시, 양산시, 밀양시, 창녕군, 거창군, 합천군' },
+    { region: '강원', areas: '강릉시, 동해시, 속초시, 삼척시, 태백시, 양양군, 고성군, 원주시, 평창군, 정선군, 영월군, 횡성군, 춘천시, 철원군, 화천군, 양구군, 인제군, 홍천군' },
+    { region: '전남', areas: '여수시, 순천시, 광양시, 고흥군, 목포시, 해남군, 무안군, 영암군, 완도군, 신안군, 장흥군, 강진군, 진도군' },
+    { region: '전북', areas: '정읍시, 김제시, 남원시, 고창군, 부안군, 순창군, 임실군' }
+  ];
+
+  function renderAreaModalBody(carrierId, carrierName) {
+    if (carrierId === 'carrier-lghello') {
+      const rowsHtml = HELLO_AREA_DATA.map(row => `
+        <tr>
+          <td class="area-table-region">${row.region}</td>
+          <td class="area-table-list">${row.areas}</td>
+        </tr>
+      `).join('');
+      return `
+        <p>${carrierName}은 아래 권역에서 설치 가능해요. 같은 시/군이라도 일부 동·읍·면은 제외될 수 있으니, 정확한 설치 가능 여부는 상담을 통해 확인해드려요.</p>
+        <table class="area-table">
+          <thead><tr><th>권역</th><th>설치 가능 지역</th></tr></thead>
+          <tbody>${rowsHtml}</tbody>
+        </table>
+      `;
+    }
+    return '<p>가능지역 정보를 준비 중이에요. 정확한 설치 가능 여부는 상담을 통해 확인해드릴게요.</p>';
+  }
+
   let brandClickCount = 0;
   let brandClickTimer = null;
   let activeAdminCarrier = CARRIERS[0].id;
@@ -1119,8 +2226,8 @@
   brandBtn.addEventListener('click', () => {
     brandClickCount++;
     if (brandClickTimer) clearTimeout(brandClickTimer);
-    brandClickTimer = setTimeout(() => { brandClickCount = 0; }, 1200);
-    if (brandClickCount >= 3) {
+    brandClickTimer = setTimeout(() => { brandClickCount = 0; }, 2000);
+    if (brandClickCount >= 7) {
       brandClickCount = 0;
       openAdminGate();
     }
@@ -1236,6 +2343,31 @@
       `;
     }).join('');
 
+    // ---- TV상품별 채널수 (속도 무관, 상품 1개당 채널수 1개) ----
+    if (!p.channelCounts) p.channelCounts = {};
+    const channelCountsHtml = meta.tvOptions.map(opt => `
+      <div class="admin-field-row">
+        <div class="admin-field-row-label">${opt.label}</div>
+        <div class="admin-field" style="grid-column: span 2;"><label>채널수 (예: 230채널, 260채널+VOD무료)</label><input type="text" data-channel-count="${opt.id}" value="${p.channelCounts[opt.id] || ''}"></div>
+      </div>
+    `).join('');
+
+    // ---- 추가 TV (2대 이상 선택 시 추가되는 TV): 속도 무관 상품별 단일 요금 + 사은품 + 채널수 ----
+    const extraTvOptionsMeta = meta.extraTvOptions || meta.tvOptions;
+    if (!p.extraChannelCounts) p.extraChannelCounts = {};
+    const extraTvRowsHtml = extraTvOptionsMeta.map(opt => {
+      const data = (p.extraTv && p.extraTv[opt.id]) || { price: 0, gift: 30000 };
+      const channelVal = p.extraChannelCounts[opt.id] || p.channelCounts[opt.id] || '';
+      return `
+        <div class="admin-field-row admin-field-row-4">
+          <div class="admin-field-row-label">${opt.label}</div>
+          <div class="admin-field"><label>월 요금</label><input type="number" data-extratv-price="${opt.id}" value="${data.price}"></div>
+          <div class="admin-field"><label>사은품 금액</label><input type="number" data-extratv-gift="${opt.id}" value="${data.gift}"></div>
+          <div class="admin-field"><label>채널수</label><input type="text" data-extratv-channel="${opt.id}" value="${channelVal}"></div>
+        </div>
+      `;
+    }).join('');
+
     const commonGiftsHtml = p.commonGifts.map((g, i) => `
       <div class="admin-gift-row">
         <input type="text" data-common-gift-index="${i}" value="${g.replace(/"/g, '&quot;')}">
@@ -1256,12 +2388,36 @@
       </div>
 
       <div class="admin-section">
+        <h4>${c.name} · TV상품별 채널수</h4>
+        <div class="admin-note">속도와 무관하게 상품마다 채널수를 한 번만 입력하면 고객 화면에 표시돼요.</div>
+        ${channelCountsHtml}
+      </div>
+
+      <div class="admin-section">
+        <h4>${c.name} · 추가 TV (2대 이상 신청 시, 속도 무관 단일 요금)</h4>
+        <div class="admin-note">TV 2대 이상을 선택하면 메인 TV 외에 추가로 신청하는 TV예요. 월요금은 메인 요금에 그대로 더해지고, 사은품도 합산돼서 표시돼요.</div>
+        ${extraTvRowsHtml}
+      </div>
+
+      <div class="admin-section">
         <h4>부가 옵션 요금 (월)</h4>
+        ${WIFI_FIXED_CARRIERS.includes(activeAdminCarrier) ? `<div class="admin-note">${WIFI_RULE_NOTE[activeAdminCarrier]}</div>` : ''}
         <div class="admin-grid">
-          <div class="admin-field"><label>와이파이</label><input type="number" id="f-wifi" value="${p.wifi}"></div>
+          <div class="admin-field">
+            <label>와이파이</label>
+            <input type="number" id="f-wifi" value="${p.wifi}" ${WIFI_FIXED_CARRIERS.includes(activeAdminCarrier) ? 'disabled' : ''}>
+          </div>
           <div class="admin-field"><label>일반전화</label><input type="number" id="f-phone-general" value="${p.phoneGeneral}"></div>
           <div class="admin-field"><label>인터넷전화</label><input type="number" id="f-phone-internet" value="${p.phoneInternet}"></div>
-          <div class="admin-field"><label>결합 할인액</label><input type="number" id="f-combo" value="${p.comboDiscount}"></div>
+          <div class="admin-field"><label>팩스</label><input type="number" id="f-phone-fax" value="${p.phoneFax}"></div>
+        </div>
+      </div>
+
+      <div class="admin-section">
+        <h4>설치비 (최초 1회, 3년 약정 기준)</h4>
+        <div class="admin-grid">
+          <div class="admin-field"><label>인터넷 단독 설치비</label><input type="number" id="f-install-only" value="${p.installFeeOnly}"></div>
+          <div class="admin-field"><label>인터넷+TV 설치비</label><input type="number" id="f-install-tv" value="${p.installFeeTv}"></div>
         </div>
       </div>
 
@@ -1330,10 +2486,35 @@
         const [sp, optId] = input.getAttribute('data-tv-gift').split('|');
         p.internetTv[sp][optId].gift = parseInt(input.value, 10) || 0;
       });
-      p.wifi = parseInt(document.getElementById('f-wifi').value, 10) || 0;
+      if (!p.extraTv) p.extraTv = {};
+      adminContent.querySelectorAll('[data-extratv-price]').forEach(input => {
+        const optId = input.getAttribute('data-extratv-price');
+        if (!p.extraTv[optId]) p.extraTv[optId] = { price: 0, gift: 30000 };
+        p.extraTv[optId].price = parseInt(input.value, 10) || 0;
+      });
+      adminContent.querySelectorAll('[data-extratv-gift]').forEach(input => {
+        const optId = input.getAttribute('data-extratv-gift');
+        if (!p.extraTv[optId]) p.extraTv[optId] = { price: 0, gift: 30000 };
+        p.extraTv[optId].gift = parseInt(input.value, 10) || 0;
+      });
+      if (!p.channelCounts) p.channelCounts = {};
+      adminContent.querySelectorAll('[data-channel-count]').forEach(input => {
+        const optId = input.getAttribute('data-channel-count');
+        p.channelCounts[optId] = input.value.trim();
+      });
+      if (!p.extraChannelCounts) p.extraChannelCounts = {};
+      adminContent.querySelectorAll('[data-extratv-channel]').forEach(input => {
+        const optId = input.getAttribute('data-extratv-channel');
+        p.extraChannelCounts[optId] = input.value.trim();
+      });
+      if (!WIFI_FIXED_CARRIERS.includes(activeAdminCarrier)) {
+        p.wifi = parseInt(document.getElementById('f-wifi').value, 10) || 0;
+      }
       p.phoneGeneral = parseInt(document.getElementById('f-phone-general').value, 10) || 0;
       p.phoneInternet = parseInt(document.getElementById('f-phone-internet').value, 10) || 0;
-      p.comboDiscount = parseInt(document.getElementById('f-combo').value, 10) || 0;
+      p.phoneFax = parseInt(document.getElementById('f-phone-fax').value, 10) || 0;
+      p.installFeeOnly = parseInt(document.getElementById('f-install-only').value, 10) || 0;
+      p.installFeeTv = parseInt(document.getElementById('f-install-tv').value, 10) || 0;
       adminContent.querySelectorAll('[data-common-gift-index]').forEach(input => {
         const idx = parseInt(input.getAttribute('data-common-gift-index'), 10);
         p.commonGifts[idx] = input.value;
